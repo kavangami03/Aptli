@@ -125,18 +125,22 @@ export function Faq() {
           className="sticky top-[calc(var(--spacing-header)+1.5rem)] overflow-hidden rounded-[28px] bg-surface shadow-lg ring-1 ring-line max-bp992:hidden"
         >
           <div className="relative aspect-[16/8] overflow-hidden bg-paper-3">
-            <AnimatePresence initial={false} mode="popLayout">
-              <m.div
-                key={active}
-                className="absolute inset-0"
-                initial={{ opacity: 0, scale: 1.04 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: duration.slow, ease: ease.out }}
-              >
-                <Image src={images[active]} alt="" fill sizes="45vw" className="object-cover" />
-              </m.div>
-            </AnimatePresence>
+            {/* All eight photos stay mounted (lazy, so they load together as the FAQ nears the viewport)
+                and crossfade, so switching questions is instant instead of waiting for a download. */}
+            {images.map((img, i) => (
+              <Image
+                key={i}
+                src={img}
+                alt=""
+                fill
+                placeholder="blur"
+                sizes="(max-width: 1199px) 50vw, 45vw"
+                className={cn(
+                  "object-cover transition-[opacity,transform] duration-(--duration-slow) ease-(--ease-out)",
+                  i === active ? "scale-100 opacity-100" : "scale-[1.04] opacity-0",
+                )}
+              />
+            ))}
             <span className="num absolute top-5 left-5 rounded-[10px] bg-brand-600 px-3 py-1.5 font-display text-small font-bold text-white">
               {String(active + 1).padStart(2, "0")} / {String(faqs.length).padStart(2, "0")}
             </span>

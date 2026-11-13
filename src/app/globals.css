@@ -777,7 +777,17 @@ html.pl-lock {
   }
 }
 
-/* Odometer 000 → 100 */
+/* Counter 000 → 100: an animated integer (--pl-n, registered so it interpolates) printed through a
+   zero-padded counter style. Always 3 tabular digits, so nothing shifts, slides or clips (preloader). */
+@property --pl-n {
+  syntax: "<integer>";
+  inherits: false;
+  initial-value: 0;
+}
+@counter-style pl-pad3 {
+  system: extends decimal;
+  pad: 3 "0";
+}
 .pl-center {
   display: flex;
   flex-direction: column;
@@ -792,35 +802,22 @@ html.pl-lock {
   font-weight: 800;
   font-size: clamp(6rem, 1.5rem + 15vw, 19rem);
   line-height: 1;
-  letter-spacing: -0.05em;
+  letter-spacing: -0.04em;
   font-variant-numeric: tabular-nums;
 }
-.pl-reel {
-  display: block;
-  height: 1em;
-  overflow: clip;
+.pl-num {
+  counter-reset: pl var(--pl-n);
+  animation: pl-count 1.5s var(--pl-roll) 0.1s both;
 }
-.pl-strip {
-  display: flex;
-  flex-direction: column;
-  --to: -50em;
-  animation: pl-roll 1.5s var(--pl-roll) 0.1s both;
+.pl-num::before {
+  content: counter(pl, pl-pad3);
 }
-.pl-strip > span {
-  display: block;
-  height: 1em;
-}
-.pl-strip[data-r="t"] {
-  --to: -20em;
-}
-.pl-strip[data-r="h"] {
-  --to: -1em;
-  animation-duration: 0.4s;
-  animation-delay: 1.2s;
-}
-@keyframes pl-roll {
+@keyframes pl-count {
+  from {
+    --pl-n: 0;
+  }
   to {
-    transform: translate3d(0, var(--to), 0);
+    --pl-n: 100;
   }
 }
 .pl-pct {

@@ -68,7 +68,7 @@ function cards(hidden: boolean) {
 
 /**
  * Channel strip: a calm statement beside a slow, edge-faded row of channel cards.
- * CSS transform loop, pauses on hover, static for reduced motion.
+ * CSS transform loop that keeps running on hover (client request), static for reduced motion.
  */
 export function ChannelMarquee() {
   return (
@@ -81,7 +81,7 @@ export function ChannelMarquee() {
           <p className="mt-1 text-small text-muted">Matched against your PMS, one reservation at a time.</p>
         </div>
         <div data-reveal="card" className="-my-2 flex min-w-0 overflow-hidden py-2 [mask-image:linear-gradient(to_right,transparent,black_6%,black_94%,transparent)]">
-          <div className="flex w-max motion-safe:animate-marquee group-hover:[animation-play-state:paused]">
+          <div className="flex w-max motion-safe:animate-marquee">
             {cards(false)}
             {cards(true)}
           </div>

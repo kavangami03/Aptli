@@ -4,11 +4,10 @@ import { PreloaderLock } from "./preloader-lock";
 
 const channels = ["Booking.com", "Expedia", "Hotels.com", "Virtual cards", "CLC", "Your PMS"];
 const words = ["Reconcile", "Prove", "Act"];
-const digits = (n: number) => Array.from({ length: n }, (_, i) => i % 10);
 
 /**
  * First-visit intro: "the ledger checks itself, then lifts away".
- *   0.1–1.6s  odometer rolls 000 → 100, channels tick off one by one, Reconcile → Prove → Act
+ *   0.1–1.6s  counter ticks 000 → 100, channels tick off one by one, Reconcile → Prove → Act
  *   1.7s      the stage drifts up and fades
  *   1.85s     five ink shutters split away (alternating up/down), a red curtain follows
  *   ~2.15s    the hero headline starts rising as the curtain lifts (via --intro)
@@ -32,7 +31,7 @@ export function Preloader() {
 
         <div className="pl-stage">
           <div className="pl-top">
-            <Image src={site.logoOnDark} alt="" width={1280} height={371} priority sizes="160px" className="pl-logo" />
+            <Image src={site.logoOnDark} alt="" width={1280} height={371} loading="eager" sizes="160px" className="pl-logo" />
             <p className="pl-caption">
               <span className="pl-live" />
               Revenue assurance for hotels
@@ -40,27 +39,9 @@ export function Preloader() {
           </div>
 
           <div className="pl-center">
+            {/* Crisp 000 → 100 counter: an animated integer (@property) shown via a 3-digit counter style */}
             <p className="pl-count">
-              <span className="pl-reel">
-                <span className="pl-strip" data-r="h">
-                  <span>0</span>
-                  <span>1</span>
-                </span>
-              </span>
-              <span className="pl-reel">
-                <span className="pl-strip" data-r="t">
-                  {[...digits(20), 0].map((d, i) => (
-                    <span key={i}>{d}</span>
-                  ))}
-                </span>
-              </span>
-              <span className="pl-reel">
-                <span className="pl-strip" data-r="u">
-                  {[...digits(50), 0].map((d, i) => (
-                    <span key={i}>{d}</span>
-                  ))}
-                </span>
-              </span>
+              <span className="pl-num" />
               <span className="pl-pct">%</span>
             </p>
 

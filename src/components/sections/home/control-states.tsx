@@ -123,7 +123,8 @@ export function ControlStates() {
             >
               {/* Strip photo (collapsed): full panel width, only clipped, never resized */}
               <div className={cn("absolute inset-0 bg-ink-2 transition-opacity duration-(--duration-slow)", on ? "opacity-0" : "opacity-100")}>
-                <Image src={s.image} alt="" fill placeholder="blur" sizes="80vw" className={cn("object-cover", s.pos)} />
+                {/* Same `sizes` as the open photo below, so both layers share one download */}
+                <Image src={s.image} alt="" fill placeholder="blur" sizes="(max-width: 1199px) 60vw, 50vw" className={cn("object-cover", s.pos)} />
                 <div className="absolute inset-0 bg-ink/45" />
               </div>
 
@@ -139,7 +140,7 @@ export function ControlStates() {
                   alt={s.alt}
                   fill
                   placeholder="blur"
-                  sizes="(max-width: 1199px) 40vw, 50vw"
+                  sizes="(max-width: 1199px) 60vw, 50vw"
                   className={cn("object-cover transition-transform duration-[1.2s] ease-(--ease-out)", s.pos, on ? "scale-100" : "scale-110")}
                 />
               </div>
