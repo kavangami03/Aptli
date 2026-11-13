@@ -1,0 +1,62 @@
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "How often should a hotel reconcile OTA bookings?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Daily is best. Commission errors, uncharged virtual cards and unposted CLC payments are easiest to fix while the stay is recent and OTA dispute windows are still open. Many hotels reconcile monthly because the work is manual. Aptli runs the check every day, so your team only reviews the findings that need them."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Which channels does Aptli reconcile?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Aptli reconciles OTA commissions from Expedia, Booking.com and Hotels.com, OTA virtual cards, and CLC direct-bill crew stays and payments. Each one is matched against your PMS reservation by reservation, so commission, card and crew-lodging leaks show up in one daily view instead of three separate reports."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does reconciliation change anything in my PMS?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. Reconciliation only reads your PMS, the OTA extranets and the CLC portal to compare records. Nothing is posted or changed during this step. Actions such as filing a dispute or posting a payment happen later, under rules you set for each property, and the ones that need approval wait for you."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is a fuzzy match, and is it safe?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A fuzzy match pairs an OTA or CLC record with a PMS reservation using details like guest name, stay dates and amount, because the confirmation number is missing or different. It is safe because Aptli never acts on a fuzzy match by itself. A person on your team confirms the pair before anything moves forward."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Do I need to replace my PMS or channel manager?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. Aptli works alongside the PMS you already run, including choiceADVANTAGE, HotelKey, SynXis, OPERA Cloud and AutoClerk. Some connectors are live and others are rolling out, so tell us yours when you book the free leakage review and we will confirm the setup for your property."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How is this different from an OTA statement or a monthly report?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "An OTA statement shows what the OTA billed, and a monthly report lists mismatches after the fact. Aptli compares every reservation against your PMS each day and attaches both records to each finding as proof. Then it hands the finding on to be fixed, so your team is not left chasing a spreadsheet."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can Aptli reconcile more than one property?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Each property is connected with its own consent and its own rules, and the findings roll up so a management company can see every property in one place. You can start with one property in the free leakage review and add the others once you have seen the findings."
+      }
+    }
+  ]
+}

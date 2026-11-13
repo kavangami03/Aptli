@@ -46,6 +46,7 @@ const meta: { who: string; icon: React.ReactNode }[] = [
 export function ReviewSteps() {
   return (
     <Section
+      id="how-it-works"
       tone="paper-2"
       className="[background-image:linear-gradient(to_bottom,rgb(20_20_19/0.05)_1px,transparent_1px),linear-gradient(to_right,rgb(20_20_19/0.05)_1px,transparent_1px)] [background-size:56px_56px]"
     >

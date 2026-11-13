@@ -216,6 +216,12 @@
     15%, 80% { opacity: 1; }
     100% { transform: translateX(100%); opacity: 0; }
   }
+  /* Reconcile → Prove → Act rail (reconciliation page): a red pulse a third of the rail tall runs down it */
+  @keyframes rail-run {
+    0% { transform: translateY(-100%); opacity: 0; }
+    15%, 80% { opacity: 1; }
+    100% { transform: translateY(300%); opacity: 0; }
+  }
   /* Control "received" tracker (7s loop, see control.tsx): the coin rides the track (a full-width wrapper moved by
      its own width) and stops on each of the five dots; the red fill follows in step, waits on
      "Received", then both fade and start over. Transform/opacity only. */

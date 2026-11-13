@@ -152,6 +152,8 @@ Tailwind utilities: `text-display` `text-h1`…`text-h6` `text-lead` `text-body`
 - **Section headers are centred:** tag → heading (max 2 lines) → one supporting line of **max 2 lines (~150 characters)**. Never put the heading on the left with text on the right. Use `<SectionIntro align="center">`.
 - **Photos stay clean:** at most **one** small tag on a photo (for example an amount or a live label). Never layer cards, receipts or tables over photos. Anything people need to read goes beside the photo.
 - **Hero = SFS style:** a full-bleed photo with a dark wash, the H1 (3 lines on desktop), one short sentence, two buttons and the red quick-path tiles. Nothing else on top.
+- **Inner pages use the same hero** (`<PageHero>` in `components/sections/shared/page-hero.tsx`) on every page, /contact/ included (its form sits in the section right below). Add the route to `DARK_HERO_ROUTES` in the header.
+- **No visible breadcrumb in any hero** (client, Nov 13 2026). Keep `breadcrumbSchema` in each page's JSON-LD.
 - **No full stops at the end of headings.** Plus Jakarta's full stop looks detached at display sizes. Use commas to join clauses.
 - AEO 40–60 word answers live in the section body copy and the FAQ, not in section intros.
 

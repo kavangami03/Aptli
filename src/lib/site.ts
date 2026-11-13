@@ -98,7 +98,7 @@ export const footerNav: { title: string; links: NavLink[] }[] = [
 /** The 14 launch pages (brief sitemap). Sitemap.ts reads this. Add a route here when it ships. */
 export const launchPages: { path: string; priority: number; live: boolean }[] = [
   { path: "/", priority: 1, live: true },
-  { path: "/reconciliation/", priority: 0.9, live: false },
+  { path: "/reconciliation/", priority: 0.9, live: true },
   { path: "/finance-truth-engine/", priority: 0.9, live: false },
   { path: "/automation/", priority: 0.9, live: false },
   { path: "/reconciliation/ota-commission/", priority: 0.8, live: false },

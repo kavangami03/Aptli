@@ -61,18 +61,18 @@ The Pexels page link is the proof of source: it shows the photo, the photographe
 | home/control-held-terminal.jpg | Home, "You stay in control" | https://www.pexels.com/photo/5239869/ |
 | home/control-received-phone.jpg | Home, "Recovered means received" | https://www.pexels.com/photo/6969615/ |
 | home/who-owner.jpg | Home, "Who it is for" | https://www.pexels.com/photo/7841788/ |
-| home/who-management-company.jpg | Home, "Who it is for" | https://www.pexels.com/photo/1367272/ |
+| home/who-management-company.jpg | Home, "Who it is for"; Reconciliation, FAQ | https://www.pexels.com/photo/1367272/ |
 | home/who-general-manager.jpg | Home, "Who it is for" | https://www.pexels.com/photo/5137951/ |
 | home/who-controller.jpg | Home, "Who it is for" | https://www.pexels.com/photo/8297044/ |
 | home/who-crew-hotel.jpg | Home, "Who it is for" | https://www.pexels.com/photo/18426842/ |
 | home/operators-concierge.jpg | Home, "Built by hotel operators" | https://www.pexels.com/photo/5371676/ |
-| home/faq-what-is-aptli.jpg | Home, FAQ | https://www.pexels.com/photo/8068770/ |
-| home/faq-report-stack.jpg | Home, FAQ | https://www.pexels.com/photo/6693647/ |
-| home/faq-booking-online.jpg | Home, FAQ | https://www.pexels.com/photo/8937451/ |
-| home/faq-approve-tablet.jpg | Home, FAQ | https://www.pexels.com/photo/7681753/ |
+| home/faq-what-is-aptli.jpg | Home, FAQ; Reconciliation, FAQ | https://www.pexels.com/photo/8068770/ |
+| home/faq-report-stack.jpg | Home, FAQ; Reconciliation, FAQ | https://www.pexels.com/photo/6693647/ |
+| home/faq-booking-online.jpg | Home, FAQ; Reconciliation, FAQ | https://www.pexels.com/photo/8937451/ |
+| home/faq-approve-tablet.jpg | Home, FAQ; Reconciliation, FAQ | https://www.pexels.com/photo/7681753/ |
 | home/faq-card-security.jpg | Home, FAQ | https://www.pexels.com/photo/4973899/ |
-| home/faq-front-desk.jpg | Home, FAQ | https://www.pexels.com/photo/5378703/ |
-| home/faq-review-call.jpg | Home, FAQ | https://www.pexels.com/photo/7776422/ |
+| home/faq-front-desk.jpg | Home, FAQ; Reconciliation, FAQ | https://www.pexels.com/photo/5378703/ |
+| home/faq-review-call.jpg | Home, FAQ; Reconciliation, FAQ | https://www.pexels.com/photo/7776422/ |
 | home/faq-received-cash.jpg | Home, FAQ | https://www.pexels.com/photo/4475523/ |
 | home/cta-hotel-dusk.jpg | Home, final call to action | https://www.pexels.com/photo/5726117/ |
 | home/cta-handshake.jpg | Home, final call to action | https://www.pexels.com/photo/8470832/ |
@@ -113,3 +113,16 @@ Pexels can change its licence, and a photographer can remove a photo, in the fut
 - Use each photo once across the site.
 
 *This file is a factual record of where the images came from. It is not legal advice. For a formal opinion, ask a lawyer.*
+
+
+## Added by kavan-image-finding
+
+| File | Used on | Source photo page | Library | Photographer | Added |
+|---|---|---|---|---|---|
+| reconciliation/recon-statement-review.jpg | Reconciliation, What is OTA reconciliation | https://www.pexels.com/photo/7691663/ | Pexels | see source page | 2026-11-13 |
+| reconciliation/recon-ota-commission.jpg | Reconciliation, channel cards (OTA commission) | https://www.pexels.com/photo/8297058/ | Pexels | see source page | 2026-11-13 |
+| reconciliation/recon-virtual-card.jpg | Reconciliation, channel cards (virtual cards) | https://www.pexels.com/photo/10330112/ | Pexels | see source page | 2026-11-13 |
+| reconciliation/recon-crew-stay.jpg | Reconciliation, channel cards (CLC direct bill) | https://www.pexels.com/photo/5470041/ | Pexels | see source page | 2026-11-13 |
+| reconciliation/recon-hero-checking.jpg | Reconciliation, hero background | https://www.pexels.com/photo/8112204/ | Pexels | see source page | 2026-11-13 |
+| review/review-hero-reception.jpg | Free leakage review, hero background | https://www.pexels.com/photo/7512139/ | Pexels | see source page | 2026-11-13 |
+<!-- kavan-image-finding: new rows go above this line -->

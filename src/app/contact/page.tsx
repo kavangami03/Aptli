@@ -2,7 +2,7 @@ import { PageMain } from "@/components/layout/page-main";
 import { ReviewCta } from "@/components/sections/review/review-cta";
 import { ReviewDeliverables } from "@/components/sections/review/review-deliverables";
 import { ReviewFaq } from "@/components/sections/review/review-faq";
-import { ReviewHero } from "@/components/sections/review/review-hero";
+import { ReviewBook, ReviewHero } from "@/components/sections/review/review-hero";
 import { ReviewSteps } from "@/components/sections/review/review-steps";
 import { ReviewTrust } from "@/components/sections/review/review-trust";
 import { JsonLd } from "@/components/seo/json-ld";
@@ -28,6 +28,7 @@ export default function ContactPage() {
         ]}
       />
       <ReviewHero />
+      <ReviewBook />
       <ReviewDeliverables />
       <ReviewSteps />
       <ReviewTrust />

@@ -25,7 +25,7 @@ const bars = [
  */
 export function ReviewDeliverables() {
   return (
-    <Section tone="paper">
+    <Section id="what-you-get" tone="paper" className="scroll-mt-[var(--spacing-header)]">
       <SectionIntro
         align="center"
         kicker="What you get"

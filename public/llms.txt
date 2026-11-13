@@ -16,5 +16,6 @@ Primary market: US hotels, especially select-service and extended-stay propertie
 
 - [Home](https://aptli.ai/): what Aptli is and how it works
 - [Free leakage review](https://aptli.ai/contact/): a free, no-obligation review of one property's OTA commissions, OTA virtual cards and CLC direct-bill payments against the PMS, with the evidence for every finding. Read-only access, only the last four digits of a card are stored.
+- [OTA reconciliation for hotels](https://aptli.ai/reconciliation/): what OTA reconciliation is and how Aptli runs it every day. Each OTA commission (Expedia, Booking.com, Hotels.com), OTA virtual card and CLC direct-bill record is paired with its PMS reservation, by confirmation number (exact match) or by guest name, dates and amount (fuzzy match, always confirmed by a person). Every difference becomes a finding with both records attached. Reconciliation only reads the PMS; nothing is changed in this step.
 
 <!-- Add each page here when it goes live (brief GEO rule). Keep this file in sync with src/lib/site.ts launchPages. -->
