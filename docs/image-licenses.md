@@ -49,12 +49,12 @@ The Pexels page link is the proof of source: it shows the photo, the photographe
 | home/before-receipts.jpg | Home, "What is Aptli" (without Aptli) | https://www.pexels.com/photo/7680736/ |
 | home/after-laptop.jpg | Home, "What is Aptli" (with Aptli) | https://www.pexels.com/photo/3184160/ |
 | home/leak-cancelled-stay.jpg | Home, leak folders | https://www.pexels.com/photo/4005599/ |
-| home/leak-early-departure.jpg | Home, leak folders | https://www.pexels.com/photo/7820359/ |
+| home/leak-early-departure.jpg | Home, leak folders; footer tile on other pages | https://www.pexels.com/photo/7820359/ |
 | home/leak-virtual-card.jpg | Home, leak folders | https://www.pexels.com/photo/2988232/ |
 | home/leak-clc-crew.jpg | Home, leak folders | https://www.pexels.com/photo/12639108/ |
 | home/step-reconcile.jpg | Home, "How it works" | https://www.pexels.com/photo/22046211/ |
 | home/step-prove.jpg | Home, "How it works" | https://www.pexels.com/photo/8296970/ |
-| home/step-act.jpg | Home, "How it works" | https://www.pexels.com/photo/22046261/ |
+| home/step-act.jpg | Home, "How it works"; footer tile on other pages | https://www.pexels.com/photo/22046261/ |
 | home/control-done-desk.jpg | Home, "You stay in control" | https://www.pexels.com/photo/10376250/ |
 | home/control-approve-phone.jpg | Home, "You stay in control" | https://www.pexels.com/photo/7014583/ |
 | home/control-task-frontdesk.jpg | Home, "You stay in control" | https://www.pexels.com/photo/7820321/ |

@@ -38,13 +38,34 @@ export function FaqRead({
   const [active, setActive] = useState(0);
   const root = useRef<HTMLDivElement>(null);
 
+  // Live check on every scroll (no cached trigger positions, so late layout shifts from lazy images or
+  // entry animations can never put the highlight out of step): the question crossing the reading line
+  // (60% down the viewport) is active; before the first it is 01, after the last it stays on the last.
   useGSAP(
     () => {
-      const items = Array.from(root.current?.querySelectorAll<HTMLElement>("[data-faq]") ?? []);
-      const triggers = items.map((el, i) =>
-        ScrollTrigger.create({ trigger: el, start: "top 60%", end: "bottom 60%", onToggle: (self) => self.isActive && setActive(i) }),
-      );
-      return () => triggers.forEach((t) => t.kill());
+      const list = root.current;
+      const items = Array.from(list?.querySelectorAll<HTMLElement>("[data-faq]") ?? []);
+      if (!list || !items.length) return;
+      let current = -1;
+      const update = () => {
+        const line = window.innerHeight * 0.6;
+        let idx = 0;
+        for (let i = 0; i < items.length; i++) {
+          if (items[i].getBoundingClientRect().top <= line) idx = i;
+          else break;
+        }
+        if (idx !== current) {
+          current = idx;
+          setActive(idx);
+        }
+      };
+      const st = ScrollTrigger.create({ trigger: list, start: "top bottom", end: "bottom top", onUpdate: update, onRefresh: update });
+      update();
+      window.addEventListener("resize", update);
+      return () => {
+        st.kill();
+        window.removeEventListener("resize", update);
+      };
     },
     { scope: root },
   );

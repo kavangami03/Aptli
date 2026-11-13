@@ -48,21 +48,21 @@ export function ReviewDeliverables() {
             <h3 className="mt-2 text-h4">{proof.title}</h3>
             <p className="mt-2 text-muted">{proof.body}</p>
             <div className="mt-auto pt-stack-md">
-              <div className="rounded-[16px] bg-paper-2 p-4 ring-1 ring-line">
+              <div className="rounded-[16px] bg-paper-2 p-4 ring-1 ring-line max-bp390:p-3">
                 <p className="text-caption text-subtle">Example finding · Booking.com</p>
-                <div className="mt-2.5 grid grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-2">
-                  <p className="rounded-[10px] bg-surface px-3 py-2">
+                <div className="mt-2.5 grid grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-2 max-bp390:gap-1.5">
+                  <p className="rounded-[10px] bg-surface px-3 py-2 max-bp390:px-2">
                     <span className="block text-caption text-subtle">OTA says</span>
                     <span className="relative isolate inline-block font-display font-bold">
                       <span aria-hidden className="hl-bar" />
                       Stayed
                     </span>
                   </p>
-                  <span className="grid size-8 place-items-center rounded-[9px] bg-ink font-display font-bold text-paper">
+                  <span className="grid size-8 place-items-center rounded-[9px] bg-ink font-display font-bold text-paper max-bp390:size-7">
                     <span aria-hidden>≠</span>
                     <span className="sr-only">does not match</span>
                   </span>
-                  <p className="rounded-[10px] bg-surface px-3 py-2">
+                  <p className="rounded-[10px] bg-surface px-3 py-2 max-bp390:px-2">
                     <span className="block text-caption text-subtle">PMS says</span>
                     <span className="block font-display font-bold">Cancelled</span>
                   </p>
