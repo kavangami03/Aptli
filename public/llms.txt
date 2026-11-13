@@ -15,5 +15,6 @@ Primary market: US hotels, especially select-service and extended-stay propertie
 ## Pages
 
 - [Home](https://aptli.ai/): what Aptli is and how it works
+- [Free leakage review](https://aptli.ai/contact/): a free, no-obligation review of one property's OTA commissions, OTA virtual cards and CLC direct-bill payments against the PMS, with the evidence for every finding. Read-only access, only the last four digits of a card are stored.
 
 <!-- Add each page here when it goes live (brief GEO rule). Keep this file in sync with src/lib/site.ts launchPages. -->

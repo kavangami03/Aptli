@@ -16,7 +16,7 @@ import { mainNav, site } from "@/lib/site";
  * - Slides away on scroll down, back on scroll up (transform only).
  * - Desktop (≥1200): inline nav + Reconciliation dropdown. Touch widths: full-screen menu.
  */
-const DARK_HERO_ROUTES = ["/"];
+const DARK_HERO_ROUTES = ["/", "/contact/"];
 
 export function SiteHeader() {
   const pathname = usePathname();

@@ -110,7 +110,7 @@ export const launchPages: { path: string; priority: number; live: boolean }[] = 
   { path: "/resources/", priority: 0.6, live: false },
   { path: "/glossary/", priority: 0.6, live: false },
   { path: "/about/", priority: 0.5, live: false },
-  { path: "/contact/", priority: 0.8, live: false },
+  { path: "/contact/", priority: 0.8, live: true },
 ];
 
 export const trademarkLine =
