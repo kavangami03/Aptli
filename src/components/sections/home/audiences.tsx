@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Section } from "@/components/ui/section";
 import { SectionIntro } from "@/components/ui/section-intro";
 import { Draggable, gsap, useGSAP } from "@/lib/gsap";
+import { mediaConditions } from "@/lib/motion";
 import { audiences } from "@/content/home";
 
 /**
@@ -13,6 +14,8 @@ import { audiences } from "@/content/home";
  * - GSAP Draggable + Inertia: grab and throw, with soft edge resistance (transform only).
  * - A custom round "Drag" cursor follows the pointer inside the slider (fine pointers only).
  * - Focus-follow keeps it usable by keyboard (tabbing to a card slides it into view).
+ * - Entry: the cards are "dealt" in from the right (tilt settles, photo zooms out, number pops,
+ *   copy rises), once, when the slider reaches the viewport. Skipped for reduced motion.
  */
 export function Audiences() {
   const root = useRef<HTMLDivElement>(null);
@@ -94,6 +97,29 @@ export function Audiences() {
     { scope: root },
   );
 
+  // Entry animation (separate from the drag logic so it can revert on its own).
+  useGSAP(
+    () => {
+      const mm = gsap.matchMedia();
+      mm.add(mediaConditions.okMotion, () => {
+        const viewport = root.current?.querySelector<HTMLElement>("[data-viewport]");
+        const cards = gsap.utils.toArray<HTMLElement>("[data-card]");
+        if (!viewport || !cards.length) return;
+        const q = (sel: string) => cards.map((c) => c.querySelector<HTMLElement>(sel)).filter(Boolean);
+        const clear = { clearProps: "transform,translate,rotate,scale,visibility,opacity" };
+
+        gsap
+          .timeline({ scrollTrigger: { trigger: viewport, start: "top 85%", once: true }, defaults: { ease: "expo.out" } })
+          .from(cards, { xPercent: 70, rotate: 5, autoAlpha: 0, transformOrigin: "0% 100%", duration: 1.1, stagger: 0.1, ...clear })
+          .from(q("img"), { scale: 1.25, duration: 1.4, stagger: 0.1, ...clear }, 0)
+          .from(q("[data-card-num]"), { scale: 0, autoAlpha: 0, duration: 0.6, ease: "back.out(2.2)", stagger: 0.1, ...clear }, 0.45)
+          .from(q("[data-card-body]"), { y: 40, autoAlpha: 0, duration: 0.8, stagger: 0.1, ...clear }, 0.4);
+      });
+      return () => mm.revert();
+    },
+    { scope: root },
+  );
+
   return (
     <div ref={root}>
       <Section id="who-its-for" tone="paper-2">
@@ -139,10 +165,10 @@ export function Audiences() {
                   className="-z-10 object-cover transition-transform duration-[1.2s] ease-(--ease-out) group-hover/card:scale-105"
                 />
                 <div className="absolute inset-0 -z-10 bg-linear-to-t from-ink via-ink/40 to-ink/0" />
-                <span className="num absolute top-5 left-5 grid size-10 place-items-center rounded-[12px] bg-surface font-display text-small font-bold text-ink">
+                <span data-card-num className="num absolute top-5 left-5 grid size-10 place-items-center rounded-[12px] bg-surface font-display text-small font-bold text-ink">
                   {String(i + 1).padStart(2, "0")}
                 </span>
-                <div className="p-6">
+                <div data-card-body className="p-6">
                   <h3 className="text-h4 text-paper">{a.who}</h3>
                   <p className="mt-2 text-small text-paper/80">{a.worry}</p>
                   <Button href={a.href} variant="light" draggable={false} className="mt-5 w-full">

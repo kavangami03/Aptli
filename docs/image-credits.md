@@ -16,3 +16,4 @@
 | footer-guides-reading.jpg | https://www.pexels.com/photo/6334764/ |
 | control-held-terminal.jpg | https://www.pexels.com/photo/5239869/ |
 | cta-handshake.jpg | https://www.pexels.com/photo/8470832/ |
+| control-received-phone.jpg | https://www.pexels.com/photo/6969615/ |

@@ -1,52 +1,93 @@
-import Image, { type StaticImageData } from "next/image";
-import approveImg from "@/assets/images/home/control-approve-phone.jpg";
-import doneImg from "@/assets/images/home/control-done-desk.jpg";
-import taskImg from "@/assets/images/home/control-task-frontdesk.jpg";
-import blockedImg from "@/assets/images/home/control-held-terminal.jpg";
-import { RevealGroup, RevealItem } from "@/components/motion/reveal";
+import Image from "next/image";
+import receivedImg from "@/assets/images/home/control-received-phone.jpg";
 import { Section } from "@/components/ui/section";
 import { SectionIntro } from "@/components/ui/section-intro";
-import { StatusChip, type Status } from "@/components/ui/status-chip";
 import { cn } from "@/lib/cn";
+import { ControlStates } from "./control-states";
 
-const cards: { status: Status; title: string; body: string; image: StaticImageData; alt: string; pos?: string }[] = [
-  {
-    status: "done",
-    title: "Taken care of",
-    body: "Aptli finished it under your rules. You see it in the morning email.",
-    image: doneImg,
-    alt: "A hotel manager reviewing the morning summary at his desk",
-  },
-  {
-    status: "approve",
-    title: "Needs your approval",
-    body: "One tap from you, and Aptli does the rest. Nothing moves without it.",
-    image: approveImg,
-    alt: "A manager approving an action on her phone",
-    pos: "object-[50%_30%]",
-  },
-  {
-    status: "task",
-    title: "Your team's task",
-    body: "Something only your staff can do, like fixing a folio, with clear steps.",
-    image: taskImg,
-    alt: "A front desk agent helping a guest at check-out",
-    pos: "object-[50%_35%]",
-  },
-  {
-    status: "blocked",
-    title: "Held on purpose",
-    body: "Aptli waits when it should, like a card charge before the cancellation window closes.",
-    image: blockedImg,
-    alt: "A card terminal waiting on a desk, not yet charged",
-  },
+/** The $640 Booking.com example ("Needs your approval" above), followed to the end. */
+const journey = [
+  { step: "Found", detail: "Booking.com and your PMS disagree" },
+  { step: "Proven", detail: "Both records attached" },
+  { step: "Actioned", detail: "You approved, Aptli filed it" },
+  { step: "Confirmed", detail: "Booking.com accepts it" },
+  { step: "Received", detail: "The money lands" },
 ];
 
-const steps = ["Found", "Proven", "Actioned", "Confirmed", "Received"];
+/**
+ * Parcel-style tracker. Desktop: one thick track through five dots; a "$" coin rides ON the track,
+ * stopping at each step, with the red fill following it (both 7s loops, transform/opacity only).
+ * ≤575: the same steps as a vertical tracker.
+ */
+function Tracker() {
+  return (
+    <>
+      <div className="max-bp576:hidden">
+        <div className="relative h-8">
+          {/* Track runs from the first dot's centre to the last (dots sit in 5 equal columns) */}
+          <div className="absolute top-1/2 right-[10%] left-[10%] h-2 -translate-y-1/2 rounded-full bg-white/12">
+            <span aria-hidden className="absolute inset-0 origin-left rounded-full bg-brand-500 motion-safe:animate-[track-fill_7s_var(--ease-in-out)_infinite]" />
+          </div>
+          <ol aria-hidden className="absolute inset-0 grid grid-cols-5">
+            {journey.map((j, i) => (
+              <li key={j.step} className="grid place-items-center">
+                <span
+                  className={cn(
+                    "relative size-5 rounded-full ring-4 ring-ink-2",
+                    i === journey.length - 1 ? "bg-brand-600 motion-safe:animate-[pulse-glow_2.4s_var(--ease-out)_infinite]" : "bg-paper/85",
+                  )}
+                />
+              </li>
+            ))}
+          </ol>
+          {/* The coin rides on the track */}
+          <div aria-hidden className="absolute inset-y-0 right-[10%] left-[10%]">
+            <span className="absolute inset-0 motion-safe:animate-[track-walk_7s_var(--ease-in-out)_infinite]">
+              <span className="absolute top-1/2 left-0 grid size-9 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full bg-surface font-display text-small font-bold text-brand-700 shadow-lg ring-4 ring-brand-500/30">
+                $
+              </span>
+            </span>
+          </div>
+        </div>
+        <ol className="mt-5 grid grid-cols-5 gap-3 text-center">
+          {journey.map((j, i) => {
+            const last = i === journey.length - 1;
+            return (
+              <li key={j.step} className="min-w-0">
+                <span className={cn("block font-display font-bold", last ? "text-brand-400" : "text-paper")}>{j.step}</span>
+                <span className="mt-1 block text-small text-paper/60 max-bp768:hidden">{j.detail}</span>
+              </li>
+            );
+          })}
+        </ol>
+      </div>
+
+      {/* Phones: vertical tracker */}
+      <ol className="relative hidden max-bp576:grid">
+        <span aria-hidden className="absolute top-3 bottom-3 left-[0.6875rem] w-1.5 overflow-hidden rounded-full bg-white/12">
+          <span className="block h-full w-full origin-top bg-brand-500 motion-safe:animate-[track-fill-y_7s_var(--ease-in-out)_infinite]" />
+        </span>
+        {journey.map((j, i) => {
+          const last = i === journey.length - 1;
+          return (
+            <li key={j.step} className="relative flex items-start gap-4 py-2.5">
+              <span className={cn("relative mt-0.5 size-6 shrink-0 rounded-full ring-4 ring-ink-2", last ? "bg-brand-600" : "bg-paper/85")} />
+              <span className="min-w-0">
+                <span className={cn("block font-display font-bold", last ? "text-brand-400" : "text-paper")}>{j.step}</span>
+                <span className="block text-small text-paper/60">{j.detail}</span>
+              </span>
+            </li>
+          );
+        })}
+      </ol>
+    </>
+  );
+}
 
 /**
- * You stay in control: four photo cards (one plain state each, one tag per photo), then a
- * one-line "recovered means received" row. Human, not a product screen.
+ * You stay in control.
+ * 1. The four states as a photo accordion (who acts, one example each).
+ * 2. Recovered means received: a clean photo beside a parcel-style tracker of the $640 example.
  */
 export function Control() {
   return (
@@ -60,64 +101,45 @@ export function Control() {
             You decide what runs, and money counts only when it is <em className="accent">received</em>
           </>
         }
-        answer="Every finding lands in one of four plain states, so everyone knows what happened and what is next."
+        answer="Every finding lands in one of four plain states, so everyone knows what happened and who acts next."
       />
 
-      <RevealGroup className="mt-stack-xl grid grid-cols-4 gap-grid-gap max-bp1200:grid-cols-2 max-bp576:grid-cols-1">
-        {cards.map((c) => (
-          <RevealItem key={c.status} className="group/c min-w-0">
-            <div className="relative aspect-[4/5] overflow-hidden rounded-[24px] bg-ink-2 max-bp576:aspect-[4/3]">
-              <Image
-                src={c.image}
-                alt={c.alt}
-                fill
-                placeholder="blur"
-                sizes="(max-width: 575px) 100vw, (max-width: 1199px) 70vw, 40vw"
-                className={cn("object-cover transition-transform duration-[1.2s] ease-(--ease-out) group-hover/c:scale-105", c.pos)}
-              />
-              <StatusChip status={c.status} className="absolute top-4 left-4 shadow-md" />
-            </div>
-            <h3 className="mt-5 text-h5 text-paper">{c.title}</h3>
-            <p className="mt-2 text-paper/70">{c.body}</p>
-          </RevealItem>
-        ))}
-      </RevealGroup>
+      <div data-reveal="card" className="mt-stack-xl">
+        <ControlStates />
+      </div>
 
-      {/* Recovered means received: one simple row */}
-      <div data-reveal="card" className="mt-section-y-sm rounded-[24px] bg-white/6 p-stack-md ring-1 ring-white/10">
-        <p className="text-center font-display text-h5 font-bold text-paper">
-          Every dollar moves through five steps. Only the last one counts.
-        </p>
-        <ol className="mt-stack-md flex flex-wrap items-center justify-center gap-x-2 gap-y-3">
-          {steps.map((s, i) => {
-            const last = i === steps.length - 1;
-            return (
-              <li key={s} className="flex items-center gap-2">
-                <span
-                  className={cn(
-                    "relative isolate overflow-visible rounded-[12px] px-4 py-2.5 font-display text-small font-bold",
-                    last ? "bg-brand-500 text-white motion-safe:animate-[pulse-glow_2.2s_var(--ease-out)_infinite]" : "bg-white/10 text-paper/85",
-                  )}
-                >
-                  {/* Continuous loop: a red light travels step to step; "Received" keeps pulsing. */}
-                  {!last && (
-                    <span
-                      aria-hidden
-                      className="absolute inset-0 -z-10 rounded-[12px] bg-brand-500 opacity-0 motion-safe:animate-[step-lit_5s_var(--ease-in-out)_infinite]"
-                      style={{ animationDelay: `${i * 0.9}s` }}
-                    />
-                  )}
-                  {s}
-                </span>
-                {!last && (
-                  <svg aria-hidden viewBox="0 0 16 16" className="size-4 text-paper/40 motion-safe:animate-[nudge_1.6s_var(--ease-in-out)_infinite]" style={{ animationDelay: `${i * 0.9 + 0.4}s` }} fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M3 8h10M9 4l4 4-4 4" />
-                  </svg>
-                )}
-              </li>
-            );
-          })}
-        </ol>
+      {/* Recovered means received */}
+      <div
+        data-reveal="card"
+        className="mt-stack-lg grid grid-cols-[minmax(0,0.8fr)_minmax(0,1.6fr)] overflow-hidden rounded-[28px] bg-ink-2 ring-1 ring-white/10 max-bp992:grid-cols-1"
+      >
+        <div className="relative min-h-[22rem] max-bp992:aspect-[16/9] max-bp992:min-h-0">
+          <Image
+            src={receivedImg}
+            alt="A hotel owner smiling at her phone as a payment arrives"
+            fill
+            placeholder="blur"
+            sizes="(max-width: 991px) 100vw, 35vw"
+            className="object-cover object-[70%_40%]"
+          />
+          <span className="absolute bottom-4 left-4 flex items-center gap-2 rounded-[10px] bg-surface px-3 py-1.5 font-display text-small font-bold text-ink shadow-md">
+            <span className="size-2 rounded-full bg-ok" />
+            $640.00 received
+          </span>
+        </div>
+
+        <div className="flex min-w-0 flex-col justify-center gap-stack-md p-stack-lg">
+          <div>
+            <p className="text-small text-paper/60">Example: the $640.00 Booking.com finding</p>
+            <h3 className="mt-2 text-h3 text-paper">Recovered means received, not just filed</h3>
+          </div>
+          <Tracker />
+          <p className="flex flex-wrap items-center gap-2 text-small">
+            <span className="rounded-[9px] bg-white/10 px-3 py-1.5 font-display font-bold text-paper/85">Steps 1 to 4: pending</span>
+            <span aria-hidden className="text-paper/40">→</span>
+            <span className="rounded-[9px] bg-brand-600 px-3 py-1.5 font-display font-bold text-white">Step 5: recovered</span>
+          </p>
+        </div>
       </div>
     </Section>
   );

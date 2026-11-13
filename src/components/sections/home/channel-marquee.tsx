@@ -26,22 +26,42 @@ const channelCards: { name: string; checks: string; icon: React.ReactNode }[] = 
   },
 ];
 
+/**
+ * Card tones alternate ink / white / red so the strip has rhythm. Text on red stays full white
+ * (AA on brand-600); muted text only sits on ink or white.
+ */
+const tones = {
+  ink: { card: "bg-ink text-paper ring-white/10", tile: "bg-brand-500 text-white", sub: "text-paper/70", tick: "bg-white/12 text-paper" },
+  brand: { card: "bg-brand-600 text-white ring-brand-700 shadow-brand", tile: "bg-white text-brand-600", sub: "text-white", tick: "bg-white text-brand-600" },
+  light: { card: "bg-surface text-ink ring-line", tile: "bg-ink text-paper", sub: "text-muted", tick: "bg-ok text-white" },
+} as const;
+// 4-step cycle over 7 cards: no two tones repeat side by side, even where the loop wraps.
+const cycle: (keyof typeof tones)[] = ["ink", "light", "brand", "light"];
+
 function cards(hidden: boolean) {
   return (
     <ul aria-hidden={hidden || undefined} className="flex shrink-0 items-stretch gap-3 pr-3">
-      {channelCards.map((c) => (
-        <li key={c.name} className="flex w-[20rem] shrink-0 items-center gap-3.5 rounded-[16px] bg-surface p-3 pr-4 ring-1 ring-line">
-          <span className="grid size-11 shrink-0 place-items-center rounded-[12px] bg-paper-2 text-ink">
-            <svg aria-hidden viewBox="0 0 24 24" className="size-5" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
-              {c.icon}
-            </svg>
-          </span>
-          <span className="min-w-0">
-            <span className="block font-display font-bold">{c.name}</span>
-            <span className="block text-small text-muted">{c.checks}</span>
-          </span>
-        </li>
-      ))}
+      {channelCards.map((c, i) => {
+        const t = tones[cycle[i % cycle.length]];
+        return (
+          <li key={c.name} className={`flex w-[21rem] shrink-0 items-center gap-3.5 rounded-[16px] p-3 pr-3.5 ring-1 ${t.card}`}>
+            <span className={`grid size-11 shrink-0 place-items-center rounded-[12px] ${t.tile}`}>
+              <svg aria-hidden viewBox="0 0 24 24" className="size-5" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                {c.icon}
+              </svg>
+            </span>
+            <span className="min-w-0 flex-1">
+              <span className="block font-display font-bold">{c.name}</span>
+              <span className={`block text-small ${t.sub}`}>{c.checks}</span>
+            </span>
+            <span aria-hidden className={`grid size-6 shrink-0 place-items-center self-start rounded-full ${t.tick}`}>
+              <svg viewBox="0 0 16 16" className="size-3.5" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M3.5 8.5l3 3 6-7" />
+              </svg>
+            </span>
+          </li>
+        );
+      })}
     </ul>
   );
 }

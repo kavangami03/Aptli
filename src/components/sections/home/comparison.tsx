@@ -52,7 +52,7 @@ export function Comparison() {
         answer="Reports leave the work to you. Recovery services hide it. Aptli shows the evidence and does the work with your approval."
       />
       <Reveal className="mt-stack-xl">
-        <div className="table-scroll pt-6">
+        <div data-reveal="card" className="table-scroll pt-6">
           <table className="w-full min-w-[56rem] border-separate border-spacing-0 text-left text-table">
             <caption className="sr-only">Comparison of reconciliation reports, outsourced recovery services and Aptli</caption>
             <thead>

@@ -27,7 +27,7 @@ A page is not done until every box is true.
 **Motion** (§4)
 - [ ] Transform/opacity only. Holds 60fps in the Chrome Performance panel with 4× CPU throttle.
 - [ ] Works with `prefers-reduced-motion` (content visible, no movement).
-- [ ] Above-the-fold text is visible at first paint (CSS `animate-rise`, never JS-hidden).
+- [ ] Above-the-fold text is visible at first paint (CSS `animate-rise`, never JS-hidden). The only exception is the first-visit preloader (§4), and hero entry delays must use `var(--intro)`.
 
 **SEO / AEO / GEO** (§5)
 - [ ] `export const metadata = pageMetadata({...})`: title ≤60 chars, description ≤155, canonical, OG.
@@ -240,6 +240,14 @@ Every library has one job. Don't mix them on the same element.
 10. Keep motion to one memorable beat per section. Don't fade in every block on scroll (the brief asks for restraint).
 11. Lazy-load heavy, below-the-fold interactive sections with `next/dynamic`.
 12. Verify: Chrome DevTools → Performance → 4× CPU slowdown. There should be no long tasks during scroll and no layout shift.
+
+**Preloader (client request, Nov 13, 2026):** `src/components/layout/preloader.tsx`, mounted once in the root layout.
+- **Sequence:** an odometer runs 000 → 100, the channels tick off, and Reconcile → Prove → Act plays. Then five ink shutters split away and a red curtain lifts.
+- **CSS only:** it uses pure CSS and transform/opacity only, so it plays and hides itself even without JS. Total length is about 2.85s.
+- **When it shows:** once per browser session (an inline script sets `data-intro="skip"` on `<html>`). It is never shown with reduced motion.
+- **Scroll:** `PreloaderLock` holds scroll until the CSS animation ends, then sets `data-intro="done"`.
+- **Hero timing:** first-paint hero animations add `var(--intro)` to their delay so they play as the curtain lifts. `--intro` is 0s when the preloader is skipped or done.
+- **Rules:** never make it longer, never block clicks (`pointer-events: none`), and never gate content on JS.
 
 Entry animations (SFS style): add `data-reveal` (fade up), `data-reveal="card"`, `"tag"`, `"line"` or `"pop"` to any element. Every page **must** wrap its content in `<PageMain>`, which mounts the system after the page hydrates. Never put `data-reveal` on an element that is centred with a Tailwind `translate-*` class: put it on an inner element (GSAP sets `translate: none` while animating).
 
