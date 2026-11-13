@@ -1,89 +1,95 @@
-const channelCards: { name: string; checks: string; icon: React.ReactNode }[] = [
-  { name: "Expedia", checks: "Commission and stay dates", icon: <path d="M4 7h16M4 12h10M4 17h6" /> },
-  { name: "Booking.com", checks: "Cancellations and no-shows", icon: <path d="M5 5h14v14H5zM9 9h6M9 13h4" /> },
-  { name: "Hotels.com", checks: "Commission on each stay", icon: <path d="M4 20V8l8-4 8 4v12M9 20v-6h6v6" /> },
-  {
-    name: "OTA virtual cards",
-    checks: "Charge windows and amounts",
-    icon: (
-      <>
-        <rect x="3" y="5.5" width="18" height="13" rx="2.5" />
-        <path d="M3 10h18M7 15h4" />
-      </>
-    ),
-  },
-  { name: "CLC direct bill", checks: "Invoices and payments", icon: <path d="M3 14l7-2 8-7a2 2 0 013 3l-7 8-2 7-2-5-5-2z" /> },
-  { name: "CLC CheckINN", checks: "Crew check-ins and check-outs", icon: <path d="M4 12l5 5L20 6" /> },
-  {
-    name: "Your PMS",
-    checks: "Folios, night audit, AR",
-    icon: (
-      <>
-        <rect x="4" y="4" width="16" height="16" rx="3" />
-        <path d="M8 9h8M8 13h8M8 17h5" />
-      </>
-    ),
-  },
+const channels = ["Expedia", "Booking.com", "Hotels.com", "OTA virtual cards", "CLC direct bill", "CLC CheckINN", "Your PMS"];
+const checks = [
+  "Commission and stay dates",
+  "Cancellations and no-shows",
+  "Commission on each stay",
+  "Charge windows and amounts",
+  "Invoices and payments",
+  "Crew check-ins and check-outs",
+  "Folios, night audit, AR",
 ];
 
-/**
- * Card tones alternate ink / white / red so the strip has rhythm. Text on red stays full white
- * (AA on brand-600); muted text only sits on ink or white.
- */
-const tones = {
-  ink: { card: "bg-ink text-paper ring-white/10", tile: "bg-brand-500 text-white", sub: "text-paper/70", tick: "bg-white/12 text-paper" },
-  brand: { card: "bg-brand-600 text-white ring-brand-700 shadow-brand", tile: "bg-white text-brand-600", sub: "text-white", tick: "bg-white text-brand-600" },
-  light: { card: "bg-surface text-ink ring-line", tile: "bg-ink text-paper", sub: "text-muted", tick: "bg-ok text-white" },
-} as const;
-// 4-step cycle over 7 cards: no two tones repeat side by side, even where the loop wraps.
-const cycle: (keyof typeof tones)[] = ["ink", "light", "brand", "light"];
+/** Seconds between neighbouring ticks firing: the "being checked" ripple runs along the strip. */
+const RIPPLE = 0.5;
+const LOOP = channels.length * RIPPLE + 1.2;
 
-function cards(hidden: boolean) {
+function Tick({ i }: { i: number }) {
+  const timing = { animationDuration: `${LOOP}s`, animationDelay: `${i * RIPPLE}s` };
   return (
-    <ul aria-hidden={hidden || undefined} className="flex shrink-0 items-stretch gap-3 pr-3">
-      {channelCards.map((c, i) => {
-        const t = tones[cycle[i % cycle.length]];
-        return (
-          <li key={c.name} className={`flex w-[21rem] shrink-0 items-center gap-3.5 rounded-[16px] p-3 pr-3.5 ring-1 ${t.card}`}>
-            <span className={`grid size-11 shrink-0 place-items-center rounded-[12px] ${t.tile}`}>
-              <svg aria-hidden viewBox="0 0 24 24" className="size-5" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                {c.icon}
-              </svg>
-            </span>
-            <span className="min-w-0 flex-1">
-              <span className="block font-display font-bold">{c.name}</span>
-              <span className={`block text-small ${t.sub}`}>{c.checks}</span>
-            </span>
-            <span aria-hidden className={`grid size-6 shrink-0 place-items-center self-start rounded-full ${t.tick}`}>
-              <svg viewBox="0 0 16 16" className="size-3.5" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M3.5 8.5l3 3 6-7" />
-              </svg>
-            </span>
-          </li>
-        );
-      })}
+    // translate-y nudges it onto the capital letters' centre line; the pop uses `transform`, so they combine
+    <span
+      aria-hidden
+      className="mx-[0.45em] inline-grid size-[0.6em] shrink-0 translate-y-[0.07em] place-items-center rounded-[0.14em] bg-brand-600 text-white motion-safe:animate-[tick-pop_6s_var(--ease-out)_infinite]"
+      style={timing}
+    >
+      <svg viewBox="0 0 16 16" className="size-[62%]" fill="none" stroke="currentColor" strokeWidth="2.8" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M3.5 8.5l3 3 6-7" className="[stroke-dasharray:16] motion-safe:animate-[tick-draw_6s_linear_infinite]" style={timing} />
+      </svg>
+    </span>
+  );
+}
+
+/** Big channel names in solid ink, a red tick after each. */
+function NameRow({ hidden }: { hidden?: boolean }) {
+  return (
+    <ul aria-hidden={hidden || undefined} className="flex shrink-0 items-center">
+      {channels.map((c, i) => (
+        <li
+          key={c}
+          // Every channel in solid ink (all are checked; a faded name would read as "not supported")
+          // No outlined text: the variable font's overlapping glyph contours show as stray lines when stroked.
+          className="flex items-center whitespace-nowrap text-ink"
+        >
+          {c}
+          <Tick i={i} />
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+/** What gets checked, small, dot-separated. */
+function CheckRow({ hidden }: { hidden?: boolean }) {
+  return (
+    <ul aria-hidden={hidden || undefined} className="flex shrink-0 items-center">
+      {checks.map((c) => (
+        <li key={c} className="flex items-center whitespace-nowrap">
+          {c}
+          <span aria-hidden className="mx-5 size-1.5 rounded-full bg-brand-500" />
+        </li>
+      ))}
     </ul>
   );
 }
 
 /**
- * Channel strip: a calm statement beside a slow, edge-faded row of channel cards.
- * CSS transform loop that keeps running on hover (client request), static for reduced motion.
+ * Channel strip as a ticker tape (deliberately unlike the hero's tiles): big channel names in display
+ * type in solid ink with a red tick after each, and a small row of what gets
+ * checked moving the other way. CSS transform loops, keep running on hover, still for reduced motion.
  */
 export function ChannelMarquee() {
   return (
-    <section aria-labelledby="channels-title" className="group relative overflow-x-clip border-b border-line bg-paper py-stack-lg">
-      <div className="container-site grid grid-cols-[minmax(0,17rem)_minmax(0,1fr)] items-center gap-stack-lg max-bp992:grid-cols-1">
-        <div data-reveal>
-          <p id="channels-title" className="font-display text-h5 font-bold">
-            Every channel, checked daily
-          </p>
-          <p className="mt-1 text-small text-muted">Matched against your PMS, one reservation at a time.</p>
+    <section aria-labelledby="channels-title" className="relative overflow-x-clip border-b border-line bg-paper py-stack-lg">
+      <div data-reveal className="container-site flex flex-wrap items-baseline justify-between gap-x-8 gap-y-1">
+        <h2 id="channels-title" className="font-display text-h5 font-bold">
+          Every channel, checked daily
+        </h2>
+        <p className="text-small text-muted">Matched against your PMS, one reservation at a time.</p>
+      </div>
+
+      <div data-reveal="card" className="mt-stack-md [mask-image:linear-gradient(to_right,transparent,black_8%,black_92%,transparent)]">
+        {/* Row 1: channel names */}
+        <div className="flex overflow-hidden py-1">
+          <div className="flex w-max font-display text-[clamp(2rem,1.2rem+3vw,4.5rem)] leading-[1.15] font-bold tracking-[-0.03em] motion-safe:animate-marquee">
+            <NameRow />
+            <NameRow hidden />
+          </div>
         </div>
-        <div data-reveal="card" className="-my-2 flex min-w-0 overflow-hidden py-2 [mask-image:linear-gradient(to_right,transparent,black_6%,black_94%,transparent)]">
-          <div className="flex w-max motion-safe:animate-marquee">
-            {cards(false)}
-            {cards(true)}
+        {/* Row 2: what is checked, moving the other way */}
+        <div className="mt-3 flex overflow-hidden border-y border-line py-3">
+          <div className="flex w-max text-small font-medium text-muted motion-safe:animate-[marquee_50s_linear_infinite_reverse]">
+            <CheckRow />
+            <CheckRow hidden />
           </div>
         </div>
       </div>

@@ -192,6 +192,19 @@
     0% { box-shadow: 0 0 0 0 rgb(236 82 36 / 0.55); }
     100% { box-shadow: 0 0 0 12px rgb(236 82 36 / 0); }
   }
+  /* Channel ticker ticks (home): every loop the box pops (with a small tilt) and the check re-draws, so a
+     "being checked" ripple runs along the strip (staggered per tick). Transform + tiny SVG stroke only. */
+  @keyframes tick-pop {
+    0%, 58%, 100% { transform: scale(1) rotate(0deg); }
+    66% { transform: scale(1.24) rotate(-8deg); }
+    76% { transform: scale(0.94) rotate(2deg); }
+    86% { transform: scale(1.03) rotate(0deg); }
+  }
+  @keyframes tick-draw {
+    0%, 58% { stroke-dashoffset: 0; }
+    62% { stroke-dashoffset: 16; }
+    78%, 100% { stroke-dashoffset: 0; }
+  }
   /* Comparison arrows: a small nudge to the right */
   @keyframes nudge {
     0%, 100% { translate: 0 0; }
