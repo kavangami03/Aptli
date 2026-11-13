@@ -26,14 +26,19 @@ export function SiteFooter() {
         <ul className="grid grid-cols-3 gap-grid-gap max-bp992:grid-cols-1">
           {tiles.map((t) => (
             <li key={t.n} data-reveal="card">
-              <Link href={t.href} className="group/tile relative block aspect-[16/10] overflow-hidden rounded-[22px] bg-ink-2 max-bp992:aspect-[16/7] max-bp576:aspect-[16/9]">
+              {/* isolate + transform-gpu: the clipped rounded corners stay on their own layer, so the photo
+                  zoom no longer flickers. Zoom is slow and small; brightening has its own gentler timing. */}
+              <Link
+                href={t.href}
+                className="group/tile relative isolate block aspect-[16/10] transform-gpu overflow-hidden rounded-[22px] bg-ink-2 [backface-visibility:hidden] max-bp992:aspect-[16/7] max-bp576:aspect-[16/9]"
+              >
                 <Image
                   src={t.image}
                   alt={t.alt}
                   fill
                   placeholder="blur"
                   sizes="(max-width: 991px) 100vw, 34vw"
-                  className="object-cover opacity-80 transition-[transform,opacity] duration-[1.2s] ease-(--ease-out) group-hover/tile:scale-105 group-hover/tile:opacity-100"
+                  className="transform-gpu object-cover opacity-80 transition-[scale,opacity] [transition-duration:1.8s,0.8s] ease-(--ease-out) [backface-visibility:hidden] group-hover/tile:scale-[1.04] group-hover/tile:opacity-100"
                 />
                 <div className="absolute inset-0 bg-linear-to-t from-ink/70 via-ink/10 to-transparent" />
                 {/* Same hover as <Button variant="brand"> on dark: white wipe, ink text, arrow swaps in a red box */}
@@ -87,23 +92,25 @@ export function SiteFooter() {
         ))}
       </div>
 
-      {/* Legal bar */}
-      <div className="container-site flex flex-wrap items-center justify-between gap-x-8 gap-y-3 border-t border-white/10 py-6 text-caption text-paper/55">
-        <p>
-          © {year} {site.legalName}. All rights reserved.
-        </p>
-        <p className="max-w-[62ch]">{trademarkLine}</p>
-        <p>
-          Designed &amp; developed by{" "}
-          <a
-            href="https://www.softqubes.com"
-            target="_blank"
-            rel="noopener"
-            className="font-display font-bold text-paper underline decoration-brand-500 underline-offset-4 transition-colors hover:text-brand-300"
-          >
-            Softqubes Technologies
-          </a>
-        </p>
+      {/* Legal bar: copyright left, studio credit right; trademark fine print on its own line below */}
+      <div className="container-site border-t border-white/10 py-6 text-caption text-paper/55">
+        <div className="flex flex-wrap items-center justify-between gap-x-8 gap-y-3">
+          <p>
+            © {year} {site.legalName}. All rights reserved.
+          </p>
+          <p>
+            Designed &amp; developed by{" "}
+            <a
+              href="https://www.softqubes.com"
+              target="_blank"
+              rel="noopener"
+              className="font-display font-bold text-paper underline decoration-brand-500 underline-offset-4 transition-colors hover:text-brand-300"
+            >
+              Softqubes Technologies LLC
+            </a>
+          </p>
+        </div>
+        <p className="mt-4 border-t border-white/5 pt-4 text-center text-paper/40">{trademarkLine}</p>
       </div>
     </footer>
   );

@@ -31,19 +31,24 @@ export function Preloader() {
 
         <div className="pl-stage">
           <div className="pl-top">
-            <Image src={site.logoOnDark} alt="" width={1280} height={371} loading="eager" fetchPriority="low" sizes="160px" className="pl-logo" />
             <p className="pl-caption">
               <span className="pl-live" />
               Revenue assurance for hotels
             </p>
+            <p className="pl-caption">Checking every channel</p>
           </div>
 
           <div className="pl-center">
-            {/* Crisp 000 → 100 counter: an animated integer (@property) shown via a 3-digit counter style */}
-            <p className="pl-count">
-              <span className="pl-num" />
-              <span className="pl-pct">%</span>
-            </p>
+            {/* The logo fills up like a gauge: a ghost wordmark, a light fill rising from the bottom with a
+                red line riding its edge (both masked to the logo shape), then the real logo snaps in. */}
+            <div className="pl-mark">
+              <span className="pl-mask">
+                <span className="pl-ghost" />
+                <span className="pl-fill" />
+                <span className="pl-edge" />
+              </span>
+              <Image src={site.logoOnDark} alt="" width={1280} height={371} loading="eager" fetchPriority="low" sizes="(max-width: 767px) 80vw, 640px" className="pl-final" />
+            </div>
 
             <ul className="pl-chips">
               {channels.map((c, i) => (

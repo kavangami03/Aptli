@@ -1,11 +1,11 @@
 import Image from "next/image";
-import { Reveal } from "@/components/motion/reveal";
 import { StackCards } from "@/components/motion/stack-cards";
 import { ArrowLink } from "@/components/ui/button";
 import { Section } from "@/components/ui/section";
 import { SectionIntro } from "@/components/ui/section-intro";
 import { StatusChip } from "@/components/ui/status-chip";
-import { leakTable, leaks } from "@/content/home";
+import { leaks } from "@/content/home";
+import { LeakSplits } from "./leak-splits";
 
 const tabs = ["Cancelled stays", "Early departures", "Virtual cards", "CLC payments"];
 
@@ -33,12 +33,12 @@ export function Leaks() {
           <article
             key={leak.title}
             data-stack-card
-            className="sticky pt-12 max-bp992:relative max-bp992:top-0! max-bp992:pt-11 [&+&]:mt-stack-xl"
+            className="sticky pt-12 max-bp992:relative max-bp992:top-0! max-bp992:pt-11 max-bp768:pt-0 [&+&]:mt-stack-xl"
             style={{ top: `calc(var(--spacing-header) + 1rem + ${i * 1.1}rem)` }}
           >
-            {/* Folder tab */}
+            {/* Folder tab (hidden on phones, client request) */}
             <div
-              className="absolute top-0 flex h-12 items-center gap-3 rounded-t-[18px] bg-surface px-5 font-display text-small font-bold ring-1 ring-line [clip-path:inset(-2px_-2px_0_-2px)] max-bp992:h-11"
+              className="absolute top-0 flex h-12 items-center gap-3 rounded-t-[18px] bg-surface px-5 font-display text-small font-bold ring-1 ring-line [clip-path:inset(-2px_-2px_0_-2px)] max-bp992:h-11 max-bp768:hidden"
               style={{ left: `clamp(1.5rem, calc(1.5rem + ${i * 23}%), calc(100% - 16rem))` }}
             >
               <span className="num grid size-6 place-items-center rounded-[7px] bg-brand-500 text-caption text-white">{i + 1}</span>
@@ -97,41 +97,16 @@ export function Leaks() {
         ))}
       </StackCards>
 
-      <Reveal className="mt-section-y-sm">
-        <div className="flex flex-wrap items-end justify-between gap-4">
+      {/* The leaks at a glance: all seven, what you miss without Aptli and what you get with it. */}
+      <div className="mt-section-y-sm">
+        <div data-reveal className="text-center">
           <h3 className="text-h3">The leaks at a glance</h3>
-          <p className="text-small text-muted">Seven gaps Aptli checks every day</p>
+          <p className="mt-2 text-muted">Seven gaps Aptli checks every day, and what changes with Aptli</p>
         </div>
-        <div className="table-scroll mt-stack-md rounded-[20px] bg-surface shadow-md ring-1 ring-line">
-          <table className="w-full min-w-[46rem] text-left text-table">
-            <caption className="sr-only">Common revenue leaks, how Aptli spots each one, and what Aptli does</caption>
-            <thead className="bg-ink text-small text-paper">
-              <tr>
-                <th scope="col" className="px-6 py-4 font-display font-semibold">What goes wrong</th>
-                <th scope="col" className="px-6 py-4 font-display font-semibold">How Aptli spots it</th>
-                <th scope="col" className="px-6 py-4 font-display font-semibold">What Aptli does</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-line">
-              {leakTable.map((r, i) => (
-                <tr key={r.wrong} className="transition-colors hover:bg-brand-50/60">
-                  <th scope="row" className="px-6 py-4 font-semibold">
-                    <span className="num mr-3 inline-grid size-6 place-items-center rounded-[7px] bg-paper-2 text-caption text-muted">{i + 1}</span>
-                    {r.wrong}
-                  </th>
-                  <td className="px-6 py-4 text-muted">{r.spot}</td>
-                  <td className="px-6 py-4">
-                    <span className="inline-flex items-center gap-2">
-                      <span aria-hidden className="size-1.5 shrink-0 rounded-full bg-brand-500" />
-                      {r.act}
-                    </span>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+        <div className="mt-stack-lg">
+          <LeakSplits />
         </div>
-      </Reveal>
+      </div>
     </Section>
   );
 }

@@ -116,14 +116,15 @@ export const leaks: Leak[] = [
   },
 ];
 
+/** The seven leaks: `miss` = what happens without Aptli, `act` = what Aptli does. `spot` = how it is found. */
 export const leakTable = [
-  { wrong: "Commission billed on a cancelled booking", spot: "PMS shows a cancellation the OTA still bills", act: "Files the dispute with the folio" },
-  { wrong: "Commission billed on nights not stayed", spot: "Folio check-out is earlier than the OTA stay", act: "Prepares the stay update for approval" },
-  { wrong: "No-show disputed by the OTA", spot: "Folio shows no arrival and no charge", act: "Answers with folio evidence before the cut-off" },
-  { wrong: "Virtual card never charged", spot: "Completed stay with an uncharged card", act: "Charges the card once it is eligible" },
-  { wrong: "Penalty charged too early", spot: "Free-cancellation window still open", act: "Blocks the charge and says why" },
-  { wrong: "CLC payment not posted to invoices", spot: "Payment lands while invoices stay open", act: "Matches and posts it, invoice by invoice" },
-  { wrong: "CLC invoice billed for the wrong nights", spot: "Invoice nights differ from the crew stay", act: "Flags it as your team's task with the fix" },
+  { short: "Cancelled booking", wrong: "Commission billed on a cancelled booking", miss: "You pay commission on a stay that never happened", spot: "PMS shows a cancellation the OTA still bills", act: "Files the dispute with the folio" },
+  { short: "Nights not stayed", wrong: "Commission billed on nights not stayed", miss: "You pay commission on nights the guest never stayed", spot: "Folio check-out is earlier than the OTA stay", act: "Prepares the stay update for approval" },
+  { short: "No-show", wrong: "No-show disputed by the OTA", miss: "The no-show fee is lost if nobody answers in time", spot: "Folio shows no arrival and no charge", act: "Answers with folio evidence before the cut-off" },
+  { short: "Uncharged card", wrong: "Virtual card never charged", miss: "The money sits on the card until the card expires", spot: "Completed stay with an uncharged card", act: "Charges the card once it is eligible" },
+  { short: "Early penalty", wrong: "Penalty charged too early", miss: "An early charge can turn into a guest dispute", spot: "Free-cancellation window still open", act: "Blocks the charge and says why" },
+  { short: "CLC payment", wrong: "CLC payment not posted to invoices", miss: "Invoices look unpaid and your AR stays open", spot: "Payment lands while invoices stay open", act: "Matches and posts it, invoice by invoice" },
+  { short: "CLC nights", wrong: "CLC invoice billed for the wrong nights", miss: "Crew nights go unbilled or get short-paid", spot: "Invoice nights differ from the crew stay", act: "Flags it as your team's task with the fix" },
 ];
 
 export const steps = [
@@ -177,17 +178,16 @@ export const ladder = [
   { step: "Received", body: "The cash is in your account. Only this counts." },
 ];
 
-export const comparison = {
-  columns: ["Reconciliation reports", "Outsourced recovery", "Aptli"],
-  rows: [
-    { label: "How often discrepancies are found", values: ["When someone runs the report", "On the vendor's schedule", "Every day, reservation by reservation"] },
-    { label: "Evidence you can see", values: ["A list of mismatches", "Rarely shared with you", "OTA and PMS records side by side"] },
-    { label: "Who does the recovery work", values: ["Your team", "The vendor, out of view", "Aptli, with your approval where it matters"] },
-    { label: "Control over what runs", values: ["Not applicable", "Limited", "Rules per property, four clear states"] },
-    { label: "When money counts as recovered", values: ["When it is flagged", "Often when it is claimed", "Only when it is received"] },
-    { label: "OTA, virtual card and CLC in one view", values: ["Usually one channel", "Varies by vendor", "All three, in one daily email"] },
-  ],
-};
+/**
+ * The usual way (reconciliation reports or an outsourced vendor, category names only per the brief)
+ * vs Aptli: four points that read straight across.
+ */
+export const comparison = [
+  { label: "How often it checks", usual: "When someone runs a report", aptli: "Every day" },
+  { label: "Proof you can see", usual: "A list, or nothing at all", aptli: "OTA and PMS side by side" },
+  { label: "Who does the work", usual: "Your team or a vendor", aptli: "Aptli, with your approval" },
+  { label: "Counts as recovered", usual: "When it is flagged or claimed", aptli: "Only when it is received" },
+];
 
 export const audiences = [
   {

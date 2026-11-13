@@ -192,6 +192,11 @@
     0% { box-shadow: 0 0 0 0 rgb(236 82 36 / 0.55); }
     100% { box-shadow: 0 0 0 12px rgb(236 82 36 / 0); }
   }
+  /* Comparison arrows: a small nudge to the right */
+  @keyframes nudge {
+    0%, 100% { translate: 0 0; }
+    50% { translate: var(--nudge, 4px 0); }
+  }
   /* Integration flow: a dot travels along a connector line */
   @keyframes flow-dot {
     0% { transform: translateX(0); opacity: 0; }
@@ -752,10 +757,6 @@ html.pl-lock {
   justify-content: space-between;
   gap: 1rem;
 }
-.pl-logo {
-  width: clamp(6.5rem, 5.5rem + 1.5vw, 9.5rem);
-  height: auto;
-}
 .pl-caption,
 .pl-note {
   display: flex;
@@ -777,17 +778,6 @@ html.pl-lock {
   }
 }
 
-/* Counter 000 → 100: an animated integer (--pl-n, registered so it interpolates) printed through a
-   zero-padded counter style. Always 3 tabular digits, so nothing shifts, slides or clips (preloader). */
-@property --pl-n {
-  syntax: "<integer>";
-  inherits: false;
-  initial-value: 0;
-}
-@counter-style pl-pad3 {
-  system: extends decimal;
-  pad: 3 "0";
-}
 .pl-center {
   display: flex;
   flex-direction: column;
@@ -795,35 +785,82 @@ html.pl-lock {
   justify-content: center;
   min-width: 0;
 }
-.pl-count {
-  display: flex;
-  align-items: flex-start;
-  font-family: var(--font-display);
-  font-weight: 800;
-  font-size: clamp(6rem, 1.5rem + 15vw, 19rem);
-  line-height: 1;
-  letter-spacing: -0.04em;
-  font-variant-numeric: tabular-nums;
+/* Preloader logo gauge: the wordmark (used as a mask) fills with light from the bottom while a red line rides
+   the rising edge; then the real logo (with its red triangle) snaps in. Transform/opacity only. */
+.pl-mark {
+  position: relative;
+  width: clamp(15rem, 5rem + 34vw, 40rem);
+  aspect-ratio: 1280 / 371;
+  animation: pl-mark-in 0.5s var(--ease-out) both;
 }
-.pl-num {
-  counter-reset: pl var(--pl-n);
-  animation: pl-count 1.5s var(--pl-roll) 0.1s both;
-}
-.pl-num::before {
-  content: counter(pl, pl-pad3);
-}
-@keyframes pl-count {
+@keyframes pl-mark-in {
   from {
-    --pl-n: 0;
+    opacity: 0;
+    transform: scale(0.94);
+  }
+}
+.pl-mask {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  -webkit-mask: url("/brand/aptli-logo-light.png") center / contain no-repeat;
+  mask: url("/brand/aptli-logo-light.png") center / contain no-repeat;
+  animation: pl-mask-out 0.3s ease-out 1.6s forwards;
+}
+.pl-ghost,
+.pl-fill,
+.pl-edge {
+  position: absolute;
+  inset: 0;
+}
+.pl-ghost {
+  background: rgb(255 255 255 / 0.12);
+}
+.pl-fill {
+  background: var(--color-paper);
+  transform-origin: 50% 100%;
+  animation: pl-fill 1.45s var(--pl-roll) 0.15s both;
+}
+@keyframes pl-fill {
+  from {
+    transform: scaleY(0);
+  }
+}
+/* A full-size layer whose top 6% is red, moved up in step with the fill, so the red line rides its edge */
+.pl-edge {
+  background: linear-gradient(to bottom, var(--color-brand-500) 0 6%, transparent 6%);
+  animation: pl-edge 1.45s var(--pl-roll) 0.15s both;
+}
+@keyframes pl-edge {
+  from {
+    transform: translateY(100%);
   }
   to {
-    --pl-n: 100;
+    transform: translateY(-6%);
   }
 }
-.pl-pct {
-  margin: 0.14em 0 0 0.06em;
-  font-size: 0.3em;
-  color: var(--color-brand-500);
+@keyframes pl-mask-out {
+  to {
+    opacity: 0;
+  }
+}
+.pl-final {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  animation: pl-final 0.45s var(--ease-spring) 1.55s forwards;
+}
+@keyframes pl-final {
+  from {
+    opacity: 0;
+    transform: scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
 }
 
 /* Channels tick off one by one */
@@ -990,38 +1027,6 @@ html.pl-lock {
   }
   100% {
     transform: translate3d(0, 0, 0) rotate(var(--r));
-  }
-}
-/* 404 hover domino (pointer devices): each digit tips right onto the next, pivoting on its
-   bottom-right corner with a slight overshoot; it stands back up in reverse order. */
-.nf-lean {
-  transform-origin: 100% 100%;
-  transition: transform 0.7s cubic-bezier(0.5, 0, 0.2, 1.35);
-  transition-delay: var(--out);
-}
-@media (hover: hover) and (pointer: fine) {
-  .group\/nf:hover .nf-lean {
-    transform: translate3d(var(--x), 0, 0) rotate(var(--lean));
-    transition-delay: var(--in);
-  }
-}
-@media (prefers-reduced-motion: reduce) {
-  .nf-lean {
-    transition: none;
-  }
-}
-/* The red 0 keeps rocking gently on its base after it lands */
-.nf-rock {
-  transform-origin: 50% 100%;
-  animation: nf-rock 3.2s var(--ease-in-out) infinite;
-}
-@keyframes nf-rock {
-  0%,
-  100% {
-    transform: rotate(0deg);
-  }
-  50% {
-    transform: rotate(-6deg);
   }
 }
 /* A crisp shadow appears under each digit as it lands */

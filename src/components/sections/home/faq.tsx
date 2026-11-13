@@ -1,8 +1,7 @@
 "use client";
 
-import { AnimatePresence, m } from "motion/react";
 import Image, { type StaticImageData } from "next/image";
-import { useId, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import approveImg from "@/assets/images/home/faq-approve-tablet.jpg";
 import channelsImg from "@/assets/images/home/faq-booking-online.jpg";
 import securityImg from "@/assets/images/home/faq-card-security.jpg";
@@ -15,34 +14,35 @@ import { Button } from "@/components/ui/button";
 import { Section } from "@/components/ui/section";
 import { SectionIntro } from "@/components/ui/section-intro";
 import { cn } from "@/lib/cn";
-import { duration, ease } from "@/lib/motion";
+import { ScrollTrigger, useGSAP } from "@/lib/gsap";
 import { site } from "@/lib/site";
 import { faqs } from "@/content/home";
 
 /** One photo per question, in the same order as `faqs`, each used only here (no repeats on the page). */
 const images: StaticImageData[] = [aptliImg, reportImg, channelsImg, approveImg, securityImg, pmsImg, reviewImg, receivedImg];
+const pad = (n: number) => String(n).padStart(2, "0");
 
 /**
- * FAQ as an interactive two-panel layout (desktop): numbered questions on the left (WAI-ARIA tabs,
- * arrow keys work), a large answer card with a photo on the right. Exactly one is open, the first by
- * default. ≤991 it becomes a single-open accordion. Every answer is in the server HTML (inline
- * accordion copies), so search and AI crawlers read them all; FAQPage schema comes from the same array.
+ * FAQ as a scroll read: every question and its full answer sit one after another (right column),
+ * and the one being read lights up while the rest step back. A sticky panel on the left shows the
+ * matching photo, a big "0X / 08" counter and an 8-step progress bar, so people read them in order.
+ * ≤991 the questions simply stack (no sticky panel). All answers are always in the HTML and match
+ * the FAQPage schema word for word (same `faqs` array).
  */
 export function Faq() {
   const [active, setActive] = useState(0);
-  const uid = useId();
-  const tabs = useRef<(HTMLButtonElement | null)[]>([]);
+  const root = useRef<HTMLDivElement>(null);
 
-  const onKey = (e: React.KeyboardEvent, i: number) => {
-    const last = faqs.length - 1;
-    const next = e.key === "ArrowDown" ? (i === last ? 0 : i + 1) : e.key === "ArrowUp" ? (i === 0 ? last : i - 1) : e.key === "Home" ? 0 : e.key === "End" ? last : null;
-    if (next === null) return;
-    e.preventDefault();
-    setActive(next);
-    tabs.current[next]?.focus();
-  };
-
-  const f = faqs[active];
+  useGSAP(
+    () => {
+      const items = Array.from(root.current?.querySelectorAll<HTMLElement>("[data-faq]") ?? []);
+      const triggers = items.map((el, i) =>
+        ScrollTrigger.create({ trigger: el, start: "top 60%", end: "bottom 60%", onToggle: (self) => self.isActive && setActive(i) }),
+      );
+      return () => triggers.forEach((t) => t.kill());
+    },
+    { scope: root },
+  );
 
   return (
     <Section
@@ -58,114 +58,99 @@ export function Faq() {
             What owners and GMs <em className="accent">ask first</em>
           </>
         }
-        answer="Still unsure? Ask us in the free leakage review and we will show you on your own data."
+        answer="Eight plain answers. Scroll through them in order, it takes about two minutes."
       />
 
-      <div className="mt-stack-xl grid grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)] items-start gap-grid-gap max-bp992:grid-cols-1">
-        {/* Questions */}
-        <div role="tablist" aria-orientation="vertical" aria-label="Questions" className="grid gap-2.5">
+      <div ref={root} className="mt-stack-xl grid grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] gap-x-[clamp(2rem,1rem+4vw,6rem)] max-bp992:grid-cols-1">
+        {/* Sticky panel (desktop) */}
+        <aside aria-hidden className="max-bp992:hidden">
+          <div className="sticky top-[calc(var(--spacing-header)+2rem)] overflow-hidden rounded-[28px] bg-surface shadow-lg ring-1 ring-line">
+            <div className="relative aspect-[4/3] overflow-hidden bg-paper-3">
+              {images.map((img, i) => (
+                <Image
+                  key={i}
+                  src={img}
+                  alt=""
+                  fill
+                  placeholder="blur"
+                  sizes="(max-width: 1199px) 45vw, 40vw"
+                  className={cn(
+                    "object-cover transition-[opacity,scale] duration-(--duration-slow) ease-(--ease-out)",
+                    i === active ? "scale-100 opacity-100" : "scale-[1.04] opacity-0",
+                  )}
+                />
+              ))}
+            </div>
+            <div className="p-stack-md">
+              <div className="flex items-end justify-between gap-4">
+                <p className="num font-display text-h2 leading-none font-bold text-ink">
+                  {pad(active + 1)}
+                  <span className="text-h5 text-subtle"> / {pad(faqs.length)}</span>
+                </p>
+                <p className="pb-1 text-small text-muted">Keep scrolling</p>
+              </div>
+              {/* 8-step progress */}
+              <div className="mt-4 grid grid-cols-8 gap-1.5">
+                {faqs.map((q, i) => (
+                  <span key={q.question} className="h-1.5 overflow-hidden rounded-full bg-paper-3">
+                    <span
+                      className={cn(
+                        "block h-full origin-left rounded-full bg-brand-500 transition-transform duration-(--duration-slow) ease-(--ease-out)",
+                        i <= active ? "scale-x-100" : "scale-x-0",
+                      )}
+                    />
+                  </span>
+                ))}
+              </div>
+              <div className="mt-stack-md flex flex-wrap items-center gap-x-4 gap-y-2 border-t border-line pt-stack-md">
+                <Button href={site.primaryCta.href} variant="brand">
+                  {site.primaryCta.label}
+                </Button>
+                <p className="text-small text-subtle">See the answers on your own data.</p>
+              </div>
+            </div>
+          </div>
+        </aside>
+
+        {/* The questions, read one by one */}
+        <ol className="grid max-bp992:gap-4">
           {faqs.map((q, i) => {
             const on = i === active;
             return (
-              <div key={q.question} data-reveal="card">
-                <button
-                  ref={(el) => {
-                    tabs.current[i] = el;
-                  }}
-                  role="tab"
-                  id={`${uid}-tab-${i}`}
-                  aria-selected={on}
-                  aria-controls={`${uid}-panel`}
-                  tabIndex={on ? 0 : -1}
-                  onClick={() => setActive(i)}
-                  onKeyDown={(e) => onKey(e, i)}
-                  className={cn(
-                    "group/q flex min-h-11 w-full items-center gap-4 rounded-[18px] px-5 py-4 text-left font-display text-h6 font-bold transition-[background-color,color,box-shadow] duration-(--duration-base)",
-                    on ? "bg-ink text-paper shadow-lg" : "bg-surface text-ink ring-1 ring-line hover:ring-ink",
-                  )}
-                >
-                  <span
-                    className={cn(
-                      "num grid size-9 shrink-0 place-items-center rounded-[10px] text-small transition-colors",
-                      on ? "bg-brand-500 text-white" : "bg-paper-2 text-muted group-hover/q:bg-brand-50 group-hover/q:text-brand-700",
-                    )}
-                  >
-                    {String(i + 1).padStart(2, "0")}
+              <li
+                key={q.question}
+                data-faq
+                className={cn(
+                  "flex min-h-[62svh] flex-col justify-center border-t border-line py-stack-lg transition-opacity duration-(--duration-slow) first:border-t-0 last:min-h-[50svh]",
+                  // Phones: each question is its own card with a photo on top
+                  "max-bp992:min-h-0 max-bp992:overflow-hidden max-bp992:rounded-[22px] max-bp992:border-0 max-bp992:bg-surface max-bp992:py-0 max-bp992:opacity-100 max-bp992:shadow-sm max-bp992:ring-1 max-bp992:ring-line max-bp992:last:min-h-0",
+                  on ? "opacity-100" : "opacity-30",
+                )}
+              >
+                <div className="relative hidden aspect-[16/8] bg-paper-3 max-bp992:block">
+                  <Image src={images[i]} alt="" fill placeholder="blur" sizes="100vw" className="object-cover" />
+                  <span className="num absolute top-3 left-3 rounded-[9px] bg-brand-600 px-2.5 py-1 font-display text-caption font-bold text-white">
+                    {pad(i + 1)} / {pad(faqs.length)}
                   </span>
-                  <span className="flex-1">{q.question}</span>
-                  <svg
-                    aria-hidden
-                    viewBox="0 0 16 16"
-                    className={cn("size-4 shrink-0 transition-transform duration-(--duration-base)", on ? "text-brand-400 max-bp992:rotate-90" : "text-subtle group-hover/q:translate-x-0.5")}
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2.2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <path d="M3 8h10M9 4l4 4-4 4" />
-                  </svg>
-                </button>
-
-                {/* Inline answer (accordion, ≤991 only) */}
-                <div className={cn("hidden overflow-hidden px-2", on && "max-bp992:block")}>
-                  <p className="pt-3 pb-2 pl-[3.25rem] text-muted max-bp390:pl-2">{q.answer}</p>
                 </div>
-              </div>
+                <div className="max-bp992:p-5">
+                  <span className={cn("num grid size-10 place-items-center rounded-[11px] font-display text-small font-bold transition-colors duration-(--duration-base) max-bp992:hidden", on ? "bg-brand-600 text-white" : "bg-surface text-muted ring-1 ring-line")}>
+                    {pad(i + 1)}
+                  </span>
+                  <h3 className="mt-5 max-w-[24ch] text-h3 max-bp992:mt-0 max-bp992:text-h4">{q.question}</h3>
+                  <p className="mt-4 max-w-measure text-lead text-muted max-bp992:mt-3 max-bp992:text-body">{q.answer}</p>
+                </div>
+              </li>
             );
           })}
-        </div>
+        </ol>
+      </div>
 
-        {/* Answer card (desktop) */}
-        <div
-          id={`${uid}-panel`}
-          role="tabpanel"
-          aria-labelledby={`${uid}-tab-${active}`}
-          data-reveal="card"
-          className="sticky top-[calc(var(--spacing-header)+1.5rem)] overflow-hidden rounded-[28px] bg-surface shadow-lg ring-1 ring-line max-bp992:hidden"
-        >
-          <div className="relative aspect-[16/8] overflow-hidden bg-paper-3">
-            {/* All eight photos stay mounted (lazy, so they load together as the FAQ nears the viewport)
-                and crossfade, so switching questions is instant instead of waiting for a download. */}
-            {images.map((img, i) => (
-              <Image
-                key={i}
-                src={img}
-                alt=""
-                fill
-                placeholder="blur"
-                sizes="(max-width: 1199px) 50vw, 45vw"
-                className={cn(
-                  "object-cover transition-[opacity,transform] duration-(--duration-slow) ease-(--ease-out)",
-                  i === active ? "scale-100 opacity-100" : "scale-[1.04] opacity-0",
-                )}
-              />
-            ))}
-            <span className="num absolute top-5 left-5 rounded-[10px] bg-brand-600 px-3 py-1.5 font-display text-small font-bold text-white">
-              {String(active + 1).padStart(2, "0")} / {String(faqs.length).padStart(2, "0")}
-            </span>
-          </div>
-          <div className="p-stack-lg">
-            <AnimatePresence initial={false} mode="wait">
-              <m.div
-                key={active}
-                initial={{ opacity: 0, y: 14 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -8 }}
-                transition={{ duration: duration.base, ease: ease.out }}
-              >
-                <h3 className="max-w-[24ch] text-h4">{f.question}</h3>
-                <p className="mt-4 text-lead text-muted">{f.answer}</p>
-              </m.div>
-            </AnimatePresence>
-            <div className="mt-stack-md flex flex-wrap items-center gap-4 border-t border-line pt-stack-md">
-              <Button href={site.primaryCta.href} variant="brand">
-                {site.primaryCta.label}
-              </Button>
-              <p className="text-small text-subtle">See the answer on your own data.</p>
-            </div>
-          </div>
-        </div>
+      {/* Phones: the CTA after the last answer */}
+      <div className="mt-stack-lg hidden max-bp992:block">
+        <Button href={site.primaryCta.href} variant="brand" className="w-full">
+          {site.primaryCta.label}
+        </Button>
       </div>
     </Section>
   );

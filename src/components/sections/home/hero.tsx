@@ -135,7 +135,9 @@ export function Hero() {
       </div>
 
       {/* Red quick-path tiles */}
-      <nav aria-label="Start with a channel" className="container-site relative -mb-px">
+      {/* Desktop: tiles sit on the hero's bottom edge. ≤1199 they are standalone cards, so give them room below. */}
+      <nav aria-label="Start with a channel" className="container-site relative -mb-px max-bp1200:mb-0 max-bp1200:pb-stack-lg">
+
         <ul className="grid grid-cols-4 gap-2 max-bp1200:grid-cols-2">
           {paths.map((p, i) => {
             const t = tones[tileOrder[i % tileOrder.length]];

@@ -173,7 +173,7 @@ export function ControlStates() {
                 role="region"
                 aria-labelledby={`${uid}-btn-${i}`}
                 className={cn(
-                  "absolute inset-y-0 right-0 flex w-[44%] flex-col justify-center bg-ink-2 p-stack-lg transition-[opacity,transform] duration-(--duration-slow) ease-(--ease-out) max-bp1200:w-[56%]",
+                  "absolute inset-y-0 right-0 flex w-[44%] flex-col justify-center bg-ink-2 p-stack-lg transition-[opacity,translate] duration-(--duration-slow) ease-(--ease-out) max-bp1200:w-[56%]",
                   on ? "translate-x-0 opacity-100 delay-200" : "pointer-events-none translate-x-8 opacity-0",
                 )}
               >

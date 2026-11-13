@@ -56,7 +56,7 @@ export function ProofStage() {
               </p>
             </div>
 
-            <table className="w-full text-left">
+            <table className="w-full text-left max-bp768:hidden">
               <caption className="sr-only">Example reconciliation: what the OTA says, what the PMS says, and the result</caption>
               <thead className="text-small text-subtle">
                 <tr>
@@ -103,6 +103,46 @@ export function ProofStage() {
                 })}
               </tbody>
             </table>
+
+            {/* Phones: one stacked card per reservation (channel + result, then OTA ≠ PMS side by side; tighter ≤389).
+                Same data hooks, so the land / highlight / chip animations still play. */}
+            <ul className="hidden divide-y divide-line max-bp768:block" aria-label="Example reconciliation">
+              {heroLedger.map((r) => {
+                const mk = marks[r.channel];
+                return (
+                  <li key={r.ref} data-ledger-row className="px-5 py-5 max-bp390:px-4">
+                    <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-2">
+                      <span className="flex items-center gap-2.5 font-display font-bold">
+                        <span className={`grid size-8 shrink-0 place-items-center rounded-[9px] font-display text-caption font-extrabold ${mk?.className ?? "bg-paper-2"}`}>
+                          {mk?.label}
+                        </span>
+                        {r.channel}
+                      </span>
+                      <span data-ledger-chip className="inline-block">
+                        <StatusChip status={r.status} />
+                      </span>
+                    </div>
+                    <div className="mt-4 grid grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-2 max-bp390:gap-1.5">
+                      <p className="rounded-[12px] bg-paper-2 px-3 py-2.5 max-bp390:px-2.5">
+                        <span className="block text-caption text-subtle">OTA says</span>
+                        <span className="relative isolate mt-0.5 inline-block font-display font-bold">
+                          <span aria-hidden data-ledger-hl className="hl-bar" />
+                          {r.says}
+                        </span>
+                      </p>
+                      <span className="grid size-8 place-items-center rounded-[9px] bg-ink font-display font-bold text-paper max-bp390:size-7">
+                        <span aria-hidden>≠</span>
+                        <span className="sr-only">does not match</span>
+                      </span>
+                      <p className="rounded-[12px] bg-paper-2 px-3 py-2.5 max-bp390:px-2.5">
+                        <span className="block text-caption text-subtle">PMS says</span>
+                        <span className="mt-0.5 block font-display font-bold">{r.pms}</span>
+                      </p>
+                    </div>
+                  </li>
+                );
+              })}
+            </ul>
           </div>
 
           {/* Clean photo, one small tag */}

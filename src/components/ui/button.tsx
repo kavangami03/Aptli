@@ -82,8 +82,10 @@ export function Button(
   const s = sizes[size];
 
   const classes = cn(
-    "group/btn relative isolate inline-flex items-center justify-between gap-2 overflow-hidden rounded-[var(--radius-btn)] text-button whitespace-nowrap",
-    "transition-[transform,box-shadow] duration-(--duration-base) ease-(--ease-out) active:scale-[0.98]",
+    // Buttons size to their label (one line). Only when a container squeezes them does the label wrap,
+    // so a long label never gets cut.
+    "group/btn relative isolate inline-flex max-w-full items-center justify-between gap-2 overflow-hidden rounded-[var(--radius-btn)] text-button",
+    "transition-[scale,box-shadow] duration-(--duration-base) ease-(--ease-out) active:scale-[0.98]",
     "focus-visible:outline-offset-4 disabled:pointer-events-none disabled:opacity-50",
     v.root,
     s.root,
@@ -100,7 +102,7 @@ export function Button(
           v.wipe,
         )}
       />
-      <span className={cn("relative transition-colors duration-(--duration-base)", s.label, v.hoverText)}>{children}</span>
+      <span className={cn("relative min-w-0 py-1 text-left [text-wrap:balance] transition-colors duration-(--duration-base)", s.label, v.hoverText)}>{children}</span>
       {arrow && <ArrowBox className={cn(s.box, v.box)} />}
     </>
   );
