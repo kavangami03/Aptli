@@ -19,8 +19,8 @@ export function SiteFooter() {
       </div>
 
       {/* Brand + links */}
-      <div className="container-site grid grid-cols-[minmax(0,1.3fr)_repeat(4,minmax(0,1fr))] gap-grid-gap py-stack-xl max-bp1200:grid-cols-4 max-bp768:grid-cols-2">
-        <div data-reveal className="max-bp1200:col-span-4 max-bp768:col-span-2">
+      <div className="container-site grid grid-cols-[minmax(0,1.3fr)_repeat(4,minmax(0,1fr))] gap-grid-gap py-stack-xl max-bp1200:grid-cols-4 max-bp768:grid-cols-2 max-bp390:grid-cols-1 max-bp390:gap-y-6">
+        <div data-reveal className="max-bp1200:col-span-4 max-bp768:col-span-2 max-bp390:col-span-1">
           <Logo tone="light" />
           <p className="mt-5 max-w-[30ch] text-small text-paper/65">
             Revenue assurance for hotels. Every OTA commission, virtual card and CLC payment, checked against your PMS
@@ -28,14 +28,16 @@ export function SiteFooter() {
           </p>
         </div>
         {footerNav.map((group) => (
-          <nav key={group.title} aria-label={group.title} data-reveal>
+          <nav key={group.title} aria-label={group.title} data-reveal className="max-bp390:border-t max-bp390:border-white/10 max-bp390:pt-6">
+            {/* ≤389 (one column): a divider and more room above each group, so each heading clearly owns its links */}
             <h2 className="font-display text-small font-bold text-paper">{group.title}</h2>
-            <ul className="mt-4 grid gap-1">
+            {/* Compact link list (client request): 24px targets + 6px gaps, the WCAG 2.2 AA minimum (2.5.8) */}
+            <ul className="mt-3 grid gap-1.5">
               {group.links.map((l) => (
                 <li key={l.href}>
                   <Link
                     href={l.href}
-                    className="group/fl inline-flex min-h-9 items-center text-small text-paper/65 transition-colors hover:text-paper max-bp1200:min-h-11 max-bp1200:min-w-11"
+                    className="group/fl inline-flex min-h-6 min-w-6 items-center text-small text-paper/65 transition-colors hover:text-paper"
                   >
                     <span aria-hidden className="h-px w-0 bg-brand-500 transition-[width,margin] duration-(--duration-base) group-hover/fl:mr-2 group-hover/fl:w-3" />
                     {l.label}

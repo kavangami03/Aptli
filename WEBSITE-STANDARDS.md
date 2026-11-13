@@ -342,7 +342,7 @@ Message pillars (one per page minimum): proof, not suspicion · you stay in cont
 - Text contrast ≥4.5:1 (large text ≥3:1). The token table above is pre-checked. Don't invent new pairs.
 - Visible focus on everything (global `:focus-visible` ring in `brand-600`).
 - Real `<button>` / `<a>` / `<label>` elements, a skip link (in layout), `<main id="main">` on every page.
-- Tap targets ≥44px at ≤1199 (Button `min-h-11`).
+- Tap targets ≥44px at ≤1199 (Button `min-h-11`). **Exception (client request, Nov 13 2026):** the footer's text link lists use compact 24px targets with 6px gaps. That still meets WCAG 2.2 AA target size (2.5.8, 24×24 minimum). Do not go below 24px anywhere.
 - Status never shown by colour alone. Decorative SVGs get `aria-hidden`.
 - Respect reduced motion (CSS + Motion + GSAP + Lenis all handle it, so keep it that way).
 - Forms: 6 fields maximum (first name, last name, work email, phone, number of properties, PMS used), inputs ≥16px, inline errors that are announced to screen readers. Never ask for card numbers or passwords.

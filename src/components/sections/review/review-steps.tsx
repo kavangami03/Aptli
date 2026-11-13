@@ -62,8 +62,16 @@ export function ReviewSteps() {
 
       <div className="mt-stack-xl grid grid-cols-[minmax(0,0.75fr)_minmax(0,1.25fr)] gap-grid-gap max-bp1200:grid-cols-1">
         {/* Photo tile */}
-        <div data-reveal="card" className="relative min-h-[34rem] overflow-hidden rounded-[28px] bg-ink shadow-lg max-bp1200:aspect-[16/9] max-bp1200:min-h-0">
-          <Image src={ownerImg} alt="A hotel owner smiling as he reads the findings on his laptop" fill placeholder="blur" sizes="(max-width: 1199px) 100vw, 36vw" className="object-cover object-[50%_30%]" />
+        {/* Portrait photo: ≤1199 a 4:3 frame (16:9 showed mostly wall) centred on his face */}
+        <div data-reveal="card" className="relative min-h-[34rem] overflow-hidden rounded-[28px] bg-ink shadow-lg max-bp1200:aspect-[4/3] max-bp1200:min-h-0">
+          <Image
+            src={ownerImg}
+            alt="A hotel owner smiling as he reads the findings on his laptop"
+            fill
+            placeholder="blur"
+            sizes="(max-width: 1199px) 100vw, 36vw"
+            className="object-cover object-[50%_30%] max-bp1200:object-[50%_44%]"
+          />
           <p className="absolute bottom-5 left-5 rounded-[10px] bg-surface/95 px-3 py-2 font-display text-small font-bold text-ink shadow-md">You decide after you see the proof</p>
         </div>
 
