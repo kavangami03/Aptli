@@ -1,0 +1,406 @@
+Aptli Website Brief — Design and Content Structure
+Nov 9, 2026 · @Hari
+Purpose and how to use this brief
+This brief is the single source for the Aptli marketing website: the design team uses it to set the look and build page templates, and the digital marketing team uses it to write page structure, copy and SEO. Where the two meet (page layouts, headings, schema), both teams work from the same section.
+Aptli in one sentence: Aptli is a revenue assurance platform for hotels that reconciles OTA commissions, OTA virtual cards and CLC direct-bill payments against the PMS, proves each discrepancy with evidence, and performs the recovery action with the hotel’s approval.
+Section
+ | Design team
+ | Marketing team
+ | Positioning and messaging
+ | Read
+ | Owns copy
+ | Audiences
+ | Read
+ | Read
+ | Competitor landscape
+ | Read for visual gaps
+ | Read for message gaps
+ | Sitemap and page blueprint
+ | Builds templates
+ | Writes page content
+ | Design direction
+ | Owns
+ | Read
+ | SEO, AEO, GEO and keyword map
+ | Implements markup with dev
+ | Owns
+ | Content rules and proof
+ | Read
+ | Owns
+ | Conversion paths
+ | Designs forms and CTAs
+ | Owns funnel and tracking
+ | A working homepage prototype already exists (index.html, llms.txt, robots.txt, sitemap.xml). Treat it as a reference for structure and markup, not a final design.
+Positioning and messaging
+Aptli competes on proof and action, not on a savings headline. Competitors either show discrepancies (reports) or chase them out of view (recovery services); Aptli shows the evidence, decides what is safe to act on, does the work, and counts money only when it arrives.
+Primary headline: Hotel revenue reconciliation that proves every dollar and acts on it.
+Supporting line: Aptli checks every OTA commission, virtual card and CLC payment against your PMS each day, shows you exactly what your hotel is owed, and then files the dispute, charges the card or posts the payment, with your approval where it matters.
+The three-service story
+The three services are one daily sequence. Every page that mentions them shows them in this order.
+Reconciliation (Reconcile) — matches each reservation across OTA extranets, virtual cards, the CLC portal and the PMS, and flags where records disagree.
+Finance Truth Engine (Prove) — classifies each finding, attaches OTA and PMS evidence, excludes authorized exceptions, and tracks the amount from suspected to verified cash.
+Automation Action (Act) — files disputes and stay updates, charges eligible virtual cards, syncs CLC check-ins and posts payments, under rules set per property.
+Message pillars
+Pillar
+ | What we say
+ | Proof we show
+ | Proof, not suspicion
+ | Every finding carries the OTA and PMS records side by side
+ | Example finding card with both records
+ | You stay in control
+ | Four states: taken care of, needs approval, your team’s task, blocked
+ | The approval screen and daily email
+ | Recovered means received
+ | Money counts only when it arrives
+ | The five-step amount ladder
+ | One view of OTA, VCC and CLC
+ | No separate vendors per channel
+ | Channel summary from the daily email
+ | Built by hotel operators
+ | The rules a careful controller would follow, run daily
+ | Founder story, operator quotes
+ | Voice
+Plain, specific and calm, like a good controller explaining a variance to an owner.
+Use hotel words: folio, night audit, extranet, check-out, AR, GM. Avoid internal terms: L0–L4, Exposure, case IDs, engine names.
+Sentence case for headings and buttons. No hype words (revolutionary, magic, AI-powered) and no unverified savings figures.
+Name the action on buttons: “Get a free leakage review”, “See how it works”, “Approve” — never “Submit” or “Learn more”.
+Audiences
+The site sells to owners and management companies first; GMs and accounting teams are the users who must trust it. Every key page should answer the owner’s money question and the GM’s workload question.
+Audience
+ | What they worry about
+ | What they need to see
+ | Best entry page
+ | Owner / ownership group (select service, extended stay)
+ | Money leaking that nobody is checking
+ | What leaks, how much control they keep, how fast they see results
+ | Homepage, leakage review
+ | Management company / portfolio VP
+ | Inconsistent back-office across properties and flags
+ | One view across properties, onboarding per property, audit trail
+ | For management companies
+ | General manager
+ | More work for the front desk
+ | What runs on its own, what needs one click, what lands on staff
+ | Automation Action
+ | Controller / accounting
+ | Wrong postings, month-end surprises, unclear numbers
+ | Evidence per finding, verified-cash ladder, lock-window respect
+ | Finance Truth Engine
+ | Crew-lodging hotels (CLC)
+ | Billing speed score, unpaid CLC invoices
+ | Check-in sync, payment-to-invoice matching
+ | CLC direct-bill solution
+ | Primary market: US hotels, with a strong fit for select-service and extended-stay properties that host CLC crew business.
+Competitor landscape
+Every competitor leads with a savings number or a time-saved claim; none shows the hotel the evidence and lets it control what runs. That gap is Aptli’s position. Reviewed 9 Nov 2026.
+Competitor
+ | How they position
+ | What their site does well
+ | Gap Aptli fills
+ | x·quic
+ | “Hospitality Profit System”; six “360°” products incl. CLC, chargebacks, travel agent
+ | Free 1-year audit offer, live network counter, brand logos, AI chat assistant, buyer’s guide and glossary
+ | Big averaged savings claims; no visible evidence or approval model
+ | reconcileOTA
+ | Full-service, pay-for-performance OTA and VCC recovery
+ | Simple three-service page, operator testimonials, clear per-property average
+ | Hands-off means out of view; no CLC; thin SEO depth
+ | Evention OTA Recon
+ | Daily reservation-level reconciliation, exception queue
+ | Worked recovery examples with dollar amounts, long FAQ, ROI calculator, “Info for AI” page
+ | Finds and queues; the hotel still does the work; no CLC
+ | Otelier Rec
+ | Add-on to a back-office suite: bank, OTA and CLC reconciliation
+ | Deep nav by role, property type and use case; resources hub
+ | A reporting add-on, not recovery; requires their suite
+ | RobosizeME
+ | Self-serve RPA; VCC reconciliation with a 14-day trial
+ | Public pricing, strong FAQ, security badges, per-integration pages
+ | VCC only for this use case; OPERA-centric; no OTA commission or CLC
+ | ExploreTECH category
+ | Directory listing 5 vendors in this category
+ | Category FAQ pages that rank for definitions
+ | Aptli is not listed — a listing is an easy citation win
+ | What to borrow: a free audit offer, worked recovery examples, a glossary, per-integration pages, an AI-info page, and a security page with real controls.
+What to avoid: averaged savings headlines, live counters we can’t back with verified cash, and stock-photo heroes.
+Sitemap, navigation and URL structure
+The site launches with 14 pages in five groups; the three services are the main navigation and the three solution pages sit under Reconciliation.
+
+Aptli site map · 14 launch pages in 5 groups
+Header navigation: Reconciliation (dropdown with the three solutions) · Finance Truth Engine · Automation · Integrations · Resources, plus the primary button “Get a free leakage review”. Security, About and Glossary live in the footer.
+URL rules: lowercase, hyphenated, trailing slash, no dates in URLs. New solutions go under /reconciliation/ (e.g. /reconciliation/no-show-fees/), integrations under /integrations/<system>/, guides under /resources/<slug>/, glossary terms under /glossary/<term>/ once each term gets its own page.
+Page-by-page content blueprint
+Every page follows the same spine: a keyword H1, a 40–60 word direct answer, the proof, the questions, one primary CTA. Sections below are listed top to bottom.
+Homepage
+Hero: H1 “Hotel revenue reconciliation that proves every dollar and acts on it”, supporting line, two CTAs (Get a free leakage review / See how it works), and the live reconciliation table (OTA or CLC says · PMS says · Aptli verdict).
+“What is Aptli?” — a quotable 50-word definition plus who it’s for, what it replaces, what makes it different.
+How Aptli works: Reconcile → Prove → Act, each linking to its service page.
+“Where do hotels lose money between the OTA and the PMS?” — leak table: what goes wrong · how Aptli spots it · what Aptli does.
+Control and truth: the four action states beside the five-step verified-cash ladder.
+Comparison: reports vs outsourced recovery vs Aptli (category names only, no competitor names).
+Built by hotel operators: founder story and one quote.
+Integrations strip, FAQ (8 questions), closing CTA.
+Service pages (3)
+Page
+ | H1
+ | Must include
+ | /reconciliation/
+ | OTA, virtual card and CLC reconciliation for hotels
+ | Daily match flow, what each channel checks, match quality (exact vs fuzzy, and why fuzzy never auto-acts), links to the three solution pages
+ | /finance-truth-engine/
+ | The Finance Truth Engine: what your hotel is really owed
+ | Finding card anatomy (OTA record, PMS record, rule, amount, status), the seven discovery categories, exclusions (waivers, comps), the verified-cash ladder
+ | /automation/
+ | Hotel back-office automation you approve
+ | The four action states, what runs where (OTA extranet, CLC portal, PMS), approval flow, audit trail, “blocked” reasons, the daily email
+ | Solution pages (3 at launch)
+Page
+ | H1
+ | Worked example to feature
+ | /reconciliation/ota-commission/
+ | OTA commission reconciliation for Expedia, Booking.com and Hotels.com
+ | Commission on a cancelled booking; guest left two nights early; no-show disputed with folio evidence
+ | /reconciliation/virtual-card/
+ | OTA virtual card reconciliation and charging
+ | Completed stay, card not charged; $0-limit card; penalty charged only after free cancellation closes
+ | /reconciliation/clc-direct-bill/
+ | CLC direct-bill reconciliation and CheckINN sync
+ | 14 crew stays synced; CLC payment posted to 11 open invoices; invoice billed for 3 nights, guest stayed 1
+ | Each solution page carries: the problem in plain words, the deadline that makes speed matter, how Aptli finds it, what Aptli does, a worked example, 5–6 FAQs, CTA.
+Supporting pages
+Page
+ | Purpose
+ | Key content
+ | /integrations/
+ | Prove fit with their stack
+ | One card per system; later one page per system (e.g. /integrations/hotelkey/)
+ | /management-companies/
+ | Portfolio buyers
+ | Portfolio view, per-property onboarding, consent per property, consistent rules across flags
+ | /security/
+ | Remove the PCI and access objection
+ | Last-four-only card storage, one authorized user per property, per-property consent, audit trail; PCI status once confirmed
+ | /glossary/
+ | Rank for definitions and get cited
+ | 30–40 terms: VCC, hotel collect, free-cancellation window, no-show, CheckINN, billing speed, folio, short-pay
+ | /resources/
+ | Guides and benchmarks
+ | Pillar guides (see keyword map), later a leakage benchmark from real anonymised data
+ | /about/
+ | Trust
+ | Operator founders, company, contact
+ | /contact/
+ | Conversion
+ | Leakage review form and booking
+ | Design direction
+The site should feel like a well-kept ledger, not a startup landing page: calm, exact, and built around real reconciliation rows. The one memorable element is the reconciliation table in the hero; everything around it stays quiet.
+Visual idea
+The ledger row is the brand device. Three columns — what the OTA or CLC says, what the PMS says, what Aptli did — with a status chip. It appears in the hero, on every solution page’s worked example, and in social graphics.
+Highlighter marks the discrepancy. The differing value in a row gets a yellow highlighter underline, like an auditor marking a statement. Use it only on the number that disagrees.
+Status chips match the product. Taken care of (green), Needs approval (amber), Your team’s task (blue), Blocked (red). Same names and colors as the daily email and the app.
+Color (starting tokens — design team to refine)
+Token
+ | Light
+ | Dark
+ | Use
+ | Ground
+ | #F5F7F4
+ | #101614
+ | Page background
+ | Surface
+ | #FFFFFF
+ | #18201D
+ | Tables, cards
+ | Ink
+ | #16211E
+ | #E8EEEB
+ | Text
+ | Muted
+ | #4D5B57
+ | #A7B5B0
+ | Secondary text
+ | Ledger green
+ | #0F3B33
+ | #7FC8B4
+ | Brand, primary buttons, links
+ | Highlighter
+ | #F2C14E
+ | #F2C14E
+ | Discrepancy marks only
+ | Approve amber
+ | #8A4B00
+ | #F0B567
+ | Needs approval chip
+ | Task blue
+ | #2A4C8C
+ | #9DB9EE
+ | Your team’s task chip
+ | Block red
+ | #9B2C1F
+ | #F09A8C
+ | Blocked chip, errors
+ | Avoid navy-and-gold (x·quic) and generic SaaS blue gradients so Aptli doesn’t read as another vendor in the category.
+Typography
+One family: Schibsted Grotesk (Google Fonts), weights 400–800, with tabular figures on everywhere so amounts line up.
+Scale: H1 36–60 px fluid, H2 28–40 px, H3 21 px, body 17 px, table text 14.5–15.5 px. Line length under 75 characters.
+Sentence case throughout; no all-caps labels or eyebrows above headings.
+Layout and components
+Left-aligned content in a 1,180 px max container; grids collapse to one column below 900 px.
+Real HTML tables for comparisons and leak lists (they are indexed and quoted by AI search; images of tables are not). Tables scroll sideways inside their own box on phones.
+The Reconcile → Prove → Act sequence is the only place numbered markers are used.
+Component list for the design system: header with sticky nav, primary and secondary button, status chip, ledger table, leak table, comparison table, numbered sequence, verified-cash ladder, FAQ accordion (native details/summary), integration logo card, quote block, CTA band, footer.
+Imagery: real product screens and the daily email, never stock photos of hotel lobbies or people at laptops. Partner logos only with permission.
+Motion
+One moment only: on load, the hero table’s verdict chips settle in row by row. No scroll-triggered fades elsewhere. Respect reduced-motion settings.
+Accessibility (non-negotiable)
+WCAG 2.2 AA: text contrast 4.5:1, touch targets 44 px, visible keyboard focus.
+Status is never shown by color alone: every chip carries its words.
+Real buttons, links and form labels; one H1 per page; headings in order.
+Light and dark mode both designed, following the visitor’s system setting.
+SEO, AEO and GEO requirements
+The site must rank in Google (SEO), be picked as the direct answer in featured snippets and voice (AEO), and be quoted by ChatGPT, Perplexity, Gemini and Claude (GEO). All three reward the same thing: clear, specific, well-structured pages that answer real questions.
+Technical SEO (dev + marketing)
+Static or server-rendered HTML: every page’s text must be in the HTML, not loaded by JavaScript.
+One H1 per page holding the page’s main keyword; H2s phrased as the questions buyers ask.
+Unique title (≤ 60 characters) and meta description (≤ 155) per page; canonical URL; Open Graph and Twitter tags with a 1200×630 image.
+Clean, lowercase, hyphenated URLs with trailing slash, matching the sitemap section. No URL changes after launch without 301 redirects.
+Core Web Vitals targets: LCP under 2.5 s, CLS under 0.1, INP under 200 ms. Fonts self-hosted or preconnected; images in WebP/AVIF with width and height set.
+XML sitemap, robots.txt, Google Search Console and Bing Webmaster Tools verified at launch.
+Internal links: every solution page links up to its service page and across to the related solutions; every service page links to the homepage CTA.
+AEO: answer engine rules (marketing)
+Open each section with the answer in 40–60 words, then the detail. The answer must stand alone if lifted out of the page.
+Use question H2s (“What is OTA reconciliation?”, “Why do hotels miss virtual card payments?”).
+Put comparisons and lists in real HTML tables and lists, not images.
+Each page has a 5–8 question FAQ; visible text and FAQ schema must match word for word.
+GEO: AI search rules (marketing + dev)
+Use the same entity sentence everywhere (homepage, About, LinkedIn, directories, press): “Aptli is a revenue assurance platform for hotels that reconciles OTA commissions, OTA virtual cards and CLC direct-bill payments against the PMS…”
+Publish /llms.txt (already drafted) and keep it updated with each new page.
+robots.txt explicitly allows GPTBot, OAI-SearchBot, ClaudeBot, Claude-SearchBot, PerplexityBot, Google-Extended and Applebot-Extended.
+Write citable facts: specific, sourced, dated. Name systems and deadlines plainly (Expedia, Booking.com, CLC CheckINN, free-cancellation window).
+Earn third-party mentions AI tools rely on: ExploreTECH listing, AAHOA and hotel-tech directories, LinkedIn articles, podcast and trade-press appearances, G2/Capterra profiles once there are reviews.
+Add an “Aptli for AI” page (as Evention does) summarising facts for AI assistants.
+Structured data (dev)
+Schema type
+ | Pages
+ | Organization, WebSite
+ | All pages (sitewide)
+ | SoftwareApplication
+ | Homepage, service pages
+ | Service
+ | Each service and solution page
+ | FAQPage
+ | Every page with an FAQ
+ | BreadcrumbList
+ | All pages below the homepage
+ | HowTo
+ | Guides that walk through steps
+ | DefinedTermSet / DefinedTerm
+ | Glossary
+ | Article with author Person
+ | Resources and blog posts
+ | Validate every template in Google’s Rich Results Test and the Schema.org validator before launch.
+Keyword and question map
+One primary keyword per page, so pages don’t compete with each other. These are starting targets from competitor pages and buyer language; marketing should confirm volumes and difficulty in Semrush or Ahrefs before writing.
+Page
+ | Primary keyword
+ | Secondary keywords
+ | Questions to answer on the page
+ | /
+ | hotel revenue reconciliation
+ | hotel revenue assurance, hotel revenue leakage, OTA revenue recovery
+ | What is Aptli? Where do hotels lose money between the OTA and the PMS?
+ | /reconciliation/
+ | OTA reconciliation for hotels
+ | hotel OTA reconciliation software, automated OTA reconciliation
+ | What is OTA reconciliation? Daily vs monthly reconciliation?
+ | /reconciliation/ota-commission/
+ | OTA commission reconciliation
+ | Expedia commission dispute, Booking.com commission on cancelled booking, hotel collect commission
+ | Can I get commission back on a cancelled booking? How do I report a no-show to Booking.com?
+ | /reconciliation/virtual-card/
+ | OTA virtual card reconciliation
+ | VCC reconciliation hotel, uncharged virtual cards, Expedia virtual card
+ | What is an OTA virtual card? Why do hotels miss virtual card payments? When can I charge a VCC?
+ | /reconciliation/clc-direct-bill/
+ | CLC direct bill reconciliation
+ | CLC lodging billing, CheckINN billing speed, Corpay CLC payments
+ | How do I improve my CheckINN score? Why are CLC invoices still open after payment?
+ | /finance-truth-engine/
+ | hotel financial intelligence
+ | hotel revenue audit, hotel income audit discrepancies
+ | How do I know a discrepancy is real before I dispute it?
+ | /automation/
+ | hotel back office automation
+ | hotel RPA, automated OTA disputes, automated PMS posting
+ | Is it safe to automate card charges? What needs approval?
+ | /management-companies/
+ | revenue assurance for hotel management companies
+ | multi-property reconciliation, portfolio revenue leakage
+ | How do I standardise reconciliation across properties and brands?
+ | /security/
+ | hotel PMS data security
+ | PCI virtual card, PMS access consent
+ | Does Aptli store card numbers? Who can act in our PMS?
+ | /glossary/
+ | (one term per entry)
+ | VCC, hotel collect, merchant model, no-show, free-cancellation window, folio, short-pay
+ | What does each term mean in plain words?
+ | Resource guides (first six to write)
+How to reconcile OTA commissions: a step-by-step guide for hotel GMs.
+OTA virtual cards explained: charge windows, amounts and what goes wrong.
+Reporting no-shows and early departures to Booking.com and Expedia: deadlines and evidence.
+CLC CheckINN Certified scoring: what moves your score and how to protect it.
+Month-end checklist for hotel controllers: OTA, VCC and direct bill.
+Reconciliation tools vs recovery services vs automation: how to choose.
+Content rules, claims and proof
+The website must follow the same rule as the product: nothing counts as recovered until it is received. Any claim we can’t prove with our own data stays off the site.
+No averaged savings figures (“we save the average hotel $X”) until we have verified-cash numbers from live properties. Use worked examples with real amounts instead, marked as examples.
+No certification claims before they are granted. PCI compliance is in progress: say “only the last four digits of a card are stored” until certification is complete.
+Integrations: list only live connectors as live; mark others “rolling out” and confirm wording with product before launch.
+Third-party names: Expedia, Booking.com, Hotels.com, CLC, Corpay and CheckINN are trademarks of their owners; use names in text, logos only with permission, and keep the trademark line in the footer.
+Customer proof: quotes need written approval and a real name, title and property type. Anonymised (“GM, 112-room select-service, Texas”) is acceptable with approval.
+Deadlines and OTA rules (reporting windows, dispute cut-offs) must be checked against current OTA partner documentation and dated on the page.
+Internal language stays internal: no L0–L4, Exposure, case IDs, engine names, sprint names or client names on the site.
+Conversion paths and lead capture
+The primary conversion is a free leakage review: the hotel shares read access for one property and Aptli walks them through every finding with evidence. It mirrors the strongest competitor offer while proving Aptli’s evidence-first difference.
+Path
+ | Visitor
+ | CTA
+ | What happens next
+ | Primary
+ | Owner, GM, management company
+ | Get a free leakage review
+ | Short form → book a call → consent and read access → findings walkthrough
+ | Secondary
+ | Researching, not ready
+ | Download a guide (e.g. OTA virtual cards explained)
+ | Email nurture: one guide per week, then a review offer
+ | Portfolio
+ | Management company VP
+ | Talk to us about your portfolio
+ | Direct meeting with a founder
+ | Partner
+ | PMS vendors, consultants, AAHOA contacts
+ | Partner with Aptli
+ | Partnerships inbox
+ | Form fields (keep to six): first name, last name, work email, phone, number of properties, PMS used. Role and OTAs used are optional. No card numbers or passwords ever requested on the site.
+Tracking: GA4 (or a privacy-friendly equivalent) with events for CTA clicks, form start, form submit and call booked; UTM conventions for LinkedIn and email; cookie banner with a real decline option.
+Open decisions and deliverables
+Seven decisions block final copy; owners are to be assigned at kickoff.
+☐ Confirm domain (aptli.ai) and whether RevAssure appears as a product name or Aptli is used alone.
+☐ Confirm which PMS connectors are live vs rolling out (choiceADVANTAGE, HotelKey, SynXis, OPERA Cloud, AutoClerk).
+☐ Confirm PCI status wording for the Security page.
+☐ Decide the review offer: period covered (e.g. 90 days or 12 months) and whether it is free.
+☐ Pricing: publish, show “from” pricing, or keep it on a call.
+☐ Approve a founder story and at least one named or anonymised customer quote.
+☐ Choose CMS and hosting (static site generator or headless CMS) that serves full HTML.
+Deliverables
+Team
+ | Deliverable
+ | Design
+ | Design system (tokens, components, light and dark), templates for homepage, service page, solution page, glossary, guide, contact; mobile and desktop
+ | Marketing
+ | Final sitemap, copy for 14 launch pages, meta titles and descriptions, FAQ sets, keyword validation, first 6 guides, directory listings
+ | Development
+ | Build, schema per template, sitemap, robots.txt, llms.txt, analytics, redirects, performance and accessibility checks
+ | Reference files already prepared: homepage prototype (index.html), llms.txt, robots.txt, sitemap.xml.

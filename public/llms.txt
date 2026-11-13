@@ -1,0 +1,19 @@
+# Aptli
+
+> Aptli is a revenue assurance platform for hotels that reconciles OTA commissions, OTA virtual cards and CLC direct-bill payments against the PMS, proves each discrepancy with evidence, and performs the recovery action with the hotel's approval.
+
+Aptli works as one daily sequence of three services:
+
+1. Reconciliation (Reconcile): matches each reservation across OTA extranets, virtual cards, the CLC portal and the PMS, and flags where records disagree.
+2. Finance Truth Engine (Prove): classifies each finding, attaches OTA and PMS evidence, excludes authorized exceptions, and tracks the amount from suspected to verified cash.
+3. Automation Action (Act): files disputes and stay updates, charges eligible virtual cards, syncs CLC check-ins and posts payments, under rules set per property.
+
+Every action has one of four states: taken care of, needs approval, your team's task, or blocked. Money counts as recovered only when it is received.
+
+Primary market: US hotels, especially select-service and extended-stay properties, owners and management companies.
+
+## Pages
+
+- [Home](https://aptli.ai/): what Aptli is and how it works
+
+<!-- Add each page here when it goes live (brief GEO rule). Keep this file in sync with src/lib/site.ts launchPages. -->

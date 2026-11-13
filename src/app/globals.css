@@ -1,0 +1,631 @@
+@import "tailwindcss";
+
+/* =============================================================================
+   APTLI DESIGN TOKENS
+   Base design = 1920px (no query). Desktop-first.
+   Rules for using these tokens live in /WEBSITE-STANDARDS.md. Read it first.
+   ============================================================================= */
+
+@theme {
+  /* ---------------------------------------------------------------------------
+     BREAKPOINTS: the 16 fixed kavan-responsive-skill queries ONLY.
+     Tailwind's default sm/md/lg/xl/2xl are removed so nobody can use them.
+     Use desktop-first `max-*` variants:  max-bp992:grid-cols-1
+     max-bpXXXX = @media (width < XXXXpx) = max-width XXXX-1
+     ------------------------------------------------------------------------- */
+  --breakpoint-*: initial;
+  --breakpoint-bp1800: 1800px; /* max-width 1799 → check 1792 */
+  --breakpoint-bp1700: 1700px; /* max-width 1699 → check 1680 */
+  --breakpoint-bp1680: 1680px; /* max-width 1679 → check 1600 */
+  --breakpoint-bp1600: 1600px; /* max-width 1599 → check 1536 */
+  --breakpoint-bp1500: 1500px; /* max-width 1499 → check 1440 */
+  --breakpoint-bp1400: 1400px; /* max-width 1399 → check 1366 */
+  --breakpoint-bp1300: 1300px; /* max-width 1299 → check 1280 */
+  --breakpoint-bp1200: 1200px; /* max-width 1199 → check 1024 (touch begins) */
+  --breakpoint-bp1024: 1024px; /* max-width 1023 → check 992 */
+  --breakpoint-bp992: 992px; /* max-width 991  → check 801 */
+  --breakpoint-bp801: 801px; /* max-width 800  → check 768 */
+  --breakpoint-bp768: 768px; /* max-width 767  → check 576 (phone layout) */
+  --breakpoint-bp576: 576px; /* max-width 575  → check 481 */
+  --breakpoint-bp481: 481px; /* max-width 480  → check 390 */
+  --breakpoint-bp390: 390px; /* max-width 389  → check 375 */
+  --breakpoint-bp375: 375px; /* max-width 374  → check 320 */
+
+  /* ---------------------------------------------------------------------------
+     COLOUR: soft-white ground, ink type, Aptli red as the accent.
+     Brand red #EC5224 is sampled from the Aptli logo triangle.
+     Contrast (checked):
+       red-500 on paper 3.46  → marks, icons, large text ≥24px only
+       white on red-600 4.60  → filled red buttons (AA)
+       red-700 on paper 5.89  → red text links / inline emphasis (AA)
+       muted on paper 7.35, subtle on paper 5.31 (AA)
+     ------------------------------------------------------------------------- */
+  --color-*: initial;
+  --color-transparent: transparent;
+  --color-current: currentColor;
+  --color-white: #ffffff;
+  --color-black: #000000;
+
+  /* Grounds (soft whites) */
+  --color-paper: #fafaf7; /* page background */
+  --color-paper-2: #f3f2ee; /* alternate section band */
+  --color-paper-3: #ebe9e3; /* deeper band, wells, hover on paper-2 */
+  --color-surface: #ffffff; /* cards, tables, panels */
+
+  /* Ink (text + dark bands) */
+  --color-ink: #141413; /* headings, body, dark sections */
+  --color-ink-2: #2a2926; /* body text on dark-on-light long reads */
+  --color-muted: #55534d; /* secondary text */
+  --color-subtle: #6b6862; /* captions, meta, table headers */
+  --color-faint: #8a877f; /* non-text only: placeholder icons, dividers on dark */
+
+  /* Lines */
+  --color-line: #e6e4de;
+  --color-line-strong: #d8d5cd;
+
+  /* Brand red scale (logo red = 500) */
+  --color-brand-50: #fef4f0;
+  --color-brand-100: #fde4da;
+  --color-brand-200: #fac5b1;
+  --color-brand-300: #f59e80;
+  --color-brand-400: #f07650;
+  --color-brand-500: #ec5224;
+  --color-brand-600: #d4410f;
+  --color-brand-700: #b2350c;
+  --color-brand-800: #8e2c0e;
+  --color-brand-900: #6e2410;
+
+  /* Ledger device: highlighter marks the number that disagrees */
+  --color-highlight: #f2c14e;
+  --color-highlight-soft: #fbe7b3;
+
+  /* Status chips: same names + colours as the product (never colour alone) */
+  --color-ok: #1f6f4a; /* Taken care of */
+  --color-ok-bg: #e7f4ec;
+  --color-approve: #8a4b00; /* Needs approval */
+  --color-approve-bg: #fdf1de;
+  --color-task: #2a4c8c; /* Your team's task */
+  --color-task-bg: #e8eefa;
+  --color-block: #9b2c1f; /* Blocked */
+  --color-block-bg: #fbe9e6;
+
+  /* ---------------------------------------------------------------------------
+     TYPE: Plus Jakarta Sans (display/UI) + Inter (body). Accent = red highlight block (.accent).
+     Fluid clamp() from kavan type-scale.mjs: exact px at 1920, floor at 320.
+     ------------------------------------------------------------------------- */
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-display: var(--font-jakarta), var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: ui-monospace, "SFMono-Regular", "Cascadia Code", Menlo, Consolas, monospace;
+
+  --text-display: clamp(2.25rem, 1.6rem + 3.25vw, 5.5rem); /* 36 → 88 */
+  --text-display--font-weight: 700;
+  --text-display--line-height: 1.05;
+  --text-display--letter-spacing: -0.035em;
+  --text-h1: clamp(2.125rem, 1.65rem + 2.375vw, 4.5rem); /* 34 → 72 */
+  --text-h1--font-weight: 700;
+  --text-h1--line-height: 1.08;
+  --text-h1--letter-spacing: -0.03em;
+  --text-h2: clamp(1.75rem, 1.4rem + 1.75vw, 3.5rem); /* 28 → 56 */
+  --text-h2--font-weight: 700;
+  --text-h2--line-height: 1.1;
+  --text-h2--letter-spacing: -0.025em;
+  --text-h3: clamp(1.375rem, 1.15rem + 1.125vw, 2.5rem); /* 22 → 40 */
+  --text-h3--font-weight: 650;
+  --text-h3--line-height: 1.18;
+  --text-h3--letter-spacing: -0.02em;
+  --text-h4: clamp(1.25rem, 1.125rem + 0.625vw, 1.875rem); /* 20 → 30 */
+  --text-h4--font-weight: 600;
+  --text-h4--line-height: 1.25;
+  --text-h4--letter-spacing: -0.01em;
+  --text-h5: clamp(1.125rem, 1.05rem + 0.375vw, 1.5rem); /* 18 → 24 */
+  --text-h5--font-weight: 600;
+  --text-h5--line-height: 1.3;
+  --text-h6: clamp(1rem, 0.95rem + 0.25vw, 1.25rem); /* 16 → 20 */
+  --text-h6--font-weight: 600;
+  --text-h6--line-height: 1.35;
+  --text-lead: clamp(1.0625rem, 1rem + 0.3125vw, 1.375rem); /* 17 → 22 */
+  --text-lead--line-height: 1.55;
+  --text-body: clamp(1rem, 0.975rem + 0.125vw, 1.125rem); /* 16 → 18 */
+  --text-body--line-height: 1.65;
+  --text-small: clamp(0.875rem, 0.8625rem + 0.0625vw, 0.9375rem); /* 14 → 15 */
+  --text-small--line-height: 1.55;
+  --text-caption: clamp(0.75rem, 0.7375rem + 0.0625vw, 0.8125rem); /* 12 → 13 */
+  --text-caption--line-height: 1.45;
+  --text-caption--letter-spacing: 0.01em;
+  --text-button: clamp(0.9375rem, 0.9125rem + 0.125vw, 1.0625rem); /* 15 → 17 */
+  --text-button--line-height: 1.2;
+  --text-button--font-weight: 600;
+  --text-nav: clamp(0.9375rem, 0.925rem + 0.0625vw, 1rem); /* 15 → 16 */
+  --text-nav--line-height: 1.2;
+  --text-table: clamp(0.875rem, 0.85rem + 0.125vw, 1rem); /* 14 → 16 (ledger rows) */
+  --text-table--line-height: 1.45;
+
+  /* ---------------------------------------------------------------------------
+     SPACE + LAYOUT
+     ------------------------------------------------------------------------- */
+  --spacing-section-y: clamp(3.5rem, 2.45rem + 5.25vw, 8.75rem); /* 56 → 140 */
+  --spacing-section-y-sm: clamp(2.5rem, 1.8rem + 3.5vw, 6rem); /* 40 → 96 */
+  --spacing-gutter: clamp(1rem, 0.6rem + 2vw, 3rem); /* 16 → 48 side gutter */
+  --spacing-stack-xl: clamp(2rem, 1.5rem + 2.5vw, 4.5rem); /* 32 → 72 */
+  --spacing-stack-lg: clamp(1.5rem, 1.2rem + 1.5vw, 3rem); /* 24 → 48 */
+  --spacing-stack-md: clamp(1rem, 0.85rem + 0.75vw, 1.75rem); /* 16 → 28 */
+  --spacing-grid-gap: clamp(1rem, 0.8rem + 1vw, 2rem); /* 16 → 32 */
+  --spacing-header: 5rem; /* sticky header height (desktop) */
+
+  --container-site: 1540px; /* main content container */
+  --container-wide: 1760px; /* full-bleed visuals that still need an edge */
+  --container-prose: 72ch; /* long-form reading */
+  --container-measure: 65ch; /* paragraph measure */
+
+  /* Radius, shadow */
+  --radius-xs: 4px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+  --radius-pill: 999px; /* chips/tags only, never buttons */
+  --radius-btn: 14px;
+
+  --shadow-xs: 0 1px 2px rgb(20 20 19 / 0.05);
+  --shadow-sm: 0 1px 2px rgb(20 20 19 / 0.04), 0 2px 8px rgb(20 20 19 / 0.04);
+  --shadow-md: 0 2px 4px rgb(20 20 19 / 0.04), 0 12px 32px -8px rgb(20 20 19 / 0.1);
+  --shadow-lg: 0 4px 8px rgb(20 20 19 / 0.04), 0 32px 64px -16px rgb(20 20 19 / 0.16);
+  --shadow-brand: 0 10px 30px -10px rgb(212 65 15 / 0.45);
+
+  /* Motion: same curves as src/lib/motion.ts (GSAP + Motion share them) */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --duration-fast: 160ms;
+  --duration-base: 320ms;
+  --duration-slow: 640ms;
+
+  --animate-rise: rise 0.9s var(--ease-out) both;
+  --animate-fade: fade 0.7s var(--ease-out) both;
+  --animate-settle: settle 0.7s var(--ease-spring) both;
+  --animate-draw: draw 0.6s var(--ease-out) both;
+  --animate-zoom-out: zoom-out 1.6s var(--ease-out) both;
+  --animate-marquee: marquee 40s linear infinite;
+  --animate-float: float 6s var(--ease-in-out) infinite alternate;
+
+  /* Five-step loop (control section) */
+  @keyframes step-lit {
+    0%, 100% { opacity: 0; }
+    6%, 16% { opacity: 1; }
+    26% { opacity: 0; }
+  }
+  @keyframes pulse-glow {
+    0% { box-shadow: 0 0 0 0 rgb(236 82 36 / 0.55); }
+    100% { box-shadow: 0 0 0 12px rgb(236 82 36 / 0); }
+  }
+  /* Integration flow: a dot travels along a connector line */
+  @keyframes flow-dot {
+    0% { transform: translateX(0); opacity: 0; }
+    15%, 80% { opacity: 1; }
+    100% { transform: translateX(100%); opacity: 0; }
+  }
+  @keyframes nudge {
+    0%, 100% { transform: translateX(0); }
+    50% { transform: translateX(3px); }
+  }
+
+  @keyframes settle {
+    from {
+      opacity: 0;
+      transform: translate3d(0, 6px, 0) scale(0.6);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+  @keyframes draw {
+    from {
+      transform: scaleX(0);
+    }
+    to {
+      transform: scaleX(1);
+    }
+  }
+  @keyframes zoom-out {
+    from {
+      transform: scale(1.08);
+    }
+    to {
+      transform: scale(1);
+    }
+  }
+  @keyframes marquee {
+    to {
+      transform: translate3d(-50%, 0, 0);
+    }
+  }
+  @keyframes float {
+    from {
+      transform: translate3d(0, -6px, 0);
+    }
+    to {
+      transform: translate3d(0, 6px, 0);
+    }
+  }
+
+  @keyframes rise {
+    from {
+      opacity: 0;
+      transform: translate3d(0, 24px, 0);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+  @keyframes fade {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+}
+
+/* =============================================================================
+   BASE: kavan-responsive foundation + Aptli defaults
+   ============================================================================= */
+@layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+    scroll-padding-top: calc(var(--spacing-header) + 1rem);
+    background: var(--color-paper);
+  }
+
+  body {
+    min-width: 320px;
+    overflow-x: clip; /* safety net only, never the fix */
+    background: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: var(--text-body);
+    line-height: var(--text-body--line-height);
+    /* NOT tabular globally: Schibsted's tnum also widens "," and "." in prose.
+       Tabular figures are applied to tables + amounts below (brief: amounts line up). */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  img,
+  picture,
+  video,
+  canvas,
+  svg,
+  iframe {
+    display: block;
+    max-width: 100%;
+    height: auto;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    text-wrap: balance;
+    overflow-wrap: break-word;
+    hyphens: manual;
+    font-family: var(--font-display);
+    font-weight: 650;
+    color: var(--color-ink);
+  }
+
+  p,
+  li,
+  dd,
+  blockquote,
+  figcaption {
+    text-wrap: pretty;
+    overflow-wrap: break-word;
+  }
+
+  a[href^="http"],
+  code,
+  .break-anywhere {
+    overflow-wrap: anywhere;
+  }
+
+  input,
+  select,
+  textarea,
+  button {
+    font: inherit;
+    font-size: max(16px, 1em); /* no iOS focus zoom */
+  }
+
+  button {
+    cursor: pointer;
+  }
+
+  button,
+  .font-display {
+    font-family: var(--font-display);
+  }
+
+  /* Tabular figures ONLY on pure-number elements (.num): Schibsted's tnum also widens
+     "." and "," ("$932 .00"), so never apply it to text that contains punctuation. */
+  .num {
+    font-variant-numeric: tabular-nums;
+  }
+
+  ::selection {
+    background: var(--color-brand-500);
+    color: var(--color-white);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-brand-600);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  [hidden] {
+    display: none !important;
+  }
+}
+
+/* =============================================================================
+   COMPONENT PRIMITIVES (used through React components in src/components/ui)
+   ============================================================================= */
+@layer components {
+  .container-site {
+    width: min(100% - 2 * var(--spacing-gutter), var(--container-site));
+    margin-inline: auto;
+  }
+  .container-wide {
+    width: min(100% - 2 * var(--spacing-gutter), var(--container-wide));
+    margin-inline: auto;
+  }
+  .container-prose {
+    width: min(100% - 2 * var(--spacing-gutter), var(--container-prose));
+    margin-inline: auto;
+  }
+
+  /* The ledger highlighter: an auditor's yellow mark under the number that disagrees */
+  .mark-highlight {
+    background-image: linear-gradient(transparent 58%, var(--color-highlight) 58%, var(--color-highlight) 92%, transparent 92%);
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    padding-inline: 0.12em;
+    margin-inline: -0.12em;
+    box-decoration-break: clone;
+    -webkit-box-decoration-break: clone;
+  }
+
+  /* Accent words inside a heading: <em className="accent">acts on it.</em>
+     SFS-style red block, white ExtraBold text, wraps cleanly across lines. */
+  .accent {
+    display: inline-block;
+    font-style: normal;
+    font-weight: 800;
+    line-height: 1;
+    color: var(--color-white);
+    background-color: var(--color-brand-600);
+    border-radius: 0.14em;
+    margin-inline: 0.04em;
+    /* Fallback (no text-box support): tuned for Plus Jakarta Sans. */
+    padding: 0.04em 0.22em 0.1em;
+  }
+  /* Trim the box to cap height + baseline, then pad evenly → optically centred block. */
+  @supports (text-box: trim-both cap alphabetic) {
+    .accent {
+      text-box: trim-both cap alphabetic;
+      padding: 0.2em 0.22em;
+    }
+  }
+
+  /* Animated highlighter bar (hero ledger). Parent must be `relative inline-block`. */
+  .hl-bar {
+    position: absolute;
+    inset: 55% -0.15em 6% -0.15em;
+    z-index: -1;
+    background: var(--color-highlight);
+    border-radius: 2px;
+    transform-origin: left center;
+  }
+
+  /* Brand notch: the logo triangle pointing into the next section (SFS reference). */
+  .notch {
+    position: absolute;
+    left: 50%;
+    bottom: -1px;
+    width: 4.5rem;
+    height: 1.75rem;
+    translate: -50% 100%;
+    clip-path: polygon(0 0, 100% 0, 50% 100%);
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  /* Hero headline entry: each line rises out of a mask, then the accent block wipes in,
+     then a soft light sweeps across it every few seconds. Pure CSS (first paint / LCP safe). */
+  .hero-line {
+    display: block;
+    overflow: clip;
+    padding: 0.04em 0.14em 0.2em;
+    margin: -0.04em -0.14em -0.2em;
+  }
+  .hero-line > span {
+    display: block;
+    animation: line-up 1s var(--ease-out) both;
+  }
+  /* No overflow:hidden here: it would move the inline-block baseline to its bottom edge
+     and misalign "acts on it" with "and". The clip-path below contains the shine. */
+  .hero-accent {
+    position: relative;
+    animation: accent-wipe 0.8s var(--ease-out) 0.95s both;
+  }
+  .hero-accent::after {
+    content: "";
+    position: absolute;
+    inset: -20% auto -20% 0;
+    width: 40%;
+    background: linear-gradient(100deg, transparent, rgb(255 255 255 / 0.35), transparent);
+    transform: translateX(-120%) skewX(-12deg);
+    animation: accent-shine 5s var(--ease-in-out) 2.2s infinite;
+    pointer-events: none;
+  }
+  @media (max-width: 1023px) {
+    .hero-line,
+    .hero-line > span {
+      display: inline;
+      overflow: visible;
+      padding: 0;
+      margin: 0;
+      animation: none;
+    }
+    .hero-title {
+      animation: var(--animate-rise);
+      animation-delay: 80ms;
+    }
+  }
+  @keyframes line-up {
+    from {
+      transform: translate3d(0, 115%, 0);
+    }
+    to {
+      transform: none;
+    }
+  }
+  @keyframes accent-wipe {
+    from {
+      clip-path: inset(0 100% 0 0 round 0.16em);
+    }
+    to {
+      clip-path: inset(0 0 0 0 round 0.16em);
+    }
+  }
+  @keyframes accent-shine {
+    0% {
+      transform: translateX(-120%) skewX(-12deg);
+    }
+    35%,
+    100% {
+      transform: translateX(320%) skewX(-12deg);
+    }
+  }
+
+  /* GSAP SplitText sets text-align:start on line wrappers; keep the heading's own alignment. */
+  .split-line,
+  .split-line-mask {
+    text-align: inherit !important;
+  }
+  /* The reveal mask is one line-box tall, which clips descenders (y, g, p) and the bottom
+     of .accent blocks. Give it room (padding) and take the room back (negative margin). */
+  .split-line-mask {
+    padding: 0.04em 0.12em 0.2em !important;
+    margin: -0.04em -0.12em -0.2em !important;
+  }
+
+  /* Tables scroll inside their own box on phones, never the page */
+  .table-scroll {
+    max-width: 100%;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+/* =============================================================================
+   SMALLEST WIDTHS: longest-word safety ("reconciliation" = 14 letters)
+   fontSize × 0.62 × 14 must fit 288px content at 320
+   ============================================================================= */
+@media (max-width: 374px) {
+  :root {
+    --text-display: 2rem; /* 32px → 278px wide */
+    --text-h1: 1.875rem; /* 30px → 260px wide */
+  }
+}
+
+/* Touch widths: comfortable header height */
+@media (max-width: 1199px) {
+  :root {
+    --spacing-header: 4.25rem;
+  }
+}
+
+/* =============================================================================
+   MOTION SAFETY
+   ============================================================================= */
+/* =============================================================================
+   CUSTOM SCROLLBAR (sitewide): ink thumb on a soft track, red on hover.
+   Chromium/Safari use ::-webkit-scrollbar; Firefox falls back to scrollbar-color.
+   ============================================================================= */
+::-webkit-scrollbar {
+  width: 12px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-paper-2);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-ink);
+  border-radius: 999px;
+  border: 3px solid var(--color-paper-2);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-brand-600);
+}
+::-webkit-scrollbar-corner {
+  background: var(--color-paper-2);
+}
+/* Slim bars inside scroll boxes (tables, menus) */
+.table-scroll::-webkit-scrollbar,
+#mobile-menu::-webkit-scrollbar {
+  height: 6px;
+  width: 6px;
+}
+.table-scroll::-webkit-scrollbar-thumb,
+#mobile-menu::-webkit-scrollbar-thumb {
+  border-width: 1px;
+}
+@supports not selector(::-webkit-scrollbar) {
+  html {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-ink) var(--color-paper-2);
+  }
+}
+
+/* Smooth <details> open/close (FAQ). Progressive: older browsers just snap open. */
+@supports (interpolate-size: allow-keywords) {
+  :root {
+    interpolate-size: allow-keywords;
+  }
+  details.faq::details-content {
+    block-size: 0;
+    overflow-y: clip;
+    transition:
+      block-size var(--duration-slow) var(--ease-out),
+      content-visibility var(--duration-slow) allow-discrete;
+  }
+  details.faq[open]::details-content {
+    block-size: auto;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
