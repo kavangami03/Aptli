@@ -958,3 +958,98 @@ html.pl-lock {
     display: none;
   }
 }
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   404: digits fall from above the screen (gravity ease-in), bounce twice and settle at a tilt.
+   Transform/opacity only; reduced motion shows the settled state.
+   ───────────────────────────────────────────────────────────────────────────── */
+.nf-drop {
+  transform-origin: 50% 100%;
+  animation: nf-drop 1.3s both;
+}
+@keyframes nf-drop {
+  0% {
+    transform: translate3d(0, -130vh, 0) rotate(var(--r0));
+    animation-timing-function: cubic-bezier(0.55, 0, 1, 0.45);
+  }
+  55% {
+    transform: translate3d(0, 0, 0) rotate(var(--r));
+    animation-timing-function: cubic-bezier(0, 0.55, 0.45, 1);
+  }
+  70% {
+    transform: translate3d(0, -14%, 0) rotate(calc(var(--r) * 0.5));
+    animation-timing-function: cubic-bezier(0.55, 0, 1, 0.45);
+  }
+  84% {
+    transform: translate3d(0, 0, 0) rotate(var(--r));
+    animation-timing-function: cubic-bezier(0, 0.55, 0.45, 1);
+  }
+  92% {
+    transform: translate3d(0, -3%, 0) rotate(var(--r));
+    animation-timing-function: cubic-bezier(0.55, 0, 1, 0.45);
+  }
+  100% {
+    transform: translate3d(0, 0, 0) rotate(var(--r));
+  }
+}
+/* 404 hover domino (pointer devices): each digit tips right onto the next, pivoting on its
+   bottom-right corner with a slight overshoot; it stands back up in reverse order. */
+.nf-lean {
+  transform-origin: 100% 100%;
+  transition: transform 0.7s cubic-bezier(0.5, 0, 0.2, 1.35);
+  transition-delay: var(--out);
+}
+@media (hover: hover) and (pointer: fine) {
+  .group\/nf:hover .nf-lean {
+    transform: translate3d(var(--x), 0, 0) rotate(var(--lean));
+    transition-delay: var(--in);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .nf-lean {
+    transition: none;
+  }
+}
+/* The red 0 keeps rocking gently on its base after it lands */
+.nf-rock {
+  transform-origin: 50% 100%;
+  animation: nf-rock 3.2s var(--ease-in-out) infinite;
+}
+@keyframes nf-rock {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(-6deg);
+  }
+}
+/* A crisp shadow appears under each digit as it lands */
+.nf-shadow {
+  position: absolute;
+  left: 10%;
+  right: 10%;
+  bottom: -0.06em;
+  height: 0.08em;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgb(20 20 19 / 0.18), transparent);
+  transform-origin: center;
+  animation: nf-shadow 0.5s var(--ease-out) both;
+}
+@keyframes nf-shadow {
+  from {
+    transform: scaleX(0.2);
+    opacity: 0;
+  }
+}
+.nf-stamp {
+  transform-origin: 30% 100%;
+  animation: nf-stamp 0.5s var(--ease-spring) both;
+  rotate: 6deg;
+}
+@keyframes nf-stamp {
+  from {
+    transform: scale(2.2);
+    opacity: 0;
+  }
+}

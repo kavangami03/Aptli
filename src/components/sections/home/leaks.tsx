@@ -15,7 +15,7 @@ const tabs = ["Cancelled stays", "Early departures", "Virtual cards", "CLC payme
  */
 export function Leaks() {
   return (
-    <Section id="where-hotels-lose-money" tone="paper-2" className="[background-image:radial-gradient(var(--color-line-strong)_1px,transparent_1px)] [background-size:22px_22px]">
+    <Section id="where-hotels-lose-money" tone="paper-2" className="pb-section-y-sm [background-image:radial-gradient(var(--color-line-strong)_1px,transparent_1px)] [background-size:22px_22px]">
       <SectionIntro
         align="split"
         kicker="Where the money goes"

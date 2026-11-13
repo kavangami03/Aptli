@@ -40,8 +40,9 @@ export function HowItWorks() {
     { scope: ref },
   );
 
+  // Same ground as the leaks section above, so the two share one gap (smaller top padding).
   return (
-    <Section id="how-it-works" tone="paper-2">
+    <Section id="how-it-works" tone="paper-2" className="pt-section-y-sm">
       <SectionIntro
         align="split"
         kicker="How Aptli works"

@@ -31,7 +31,7 @@ export function Preloader() {
 
         <div className="pl-stage">
           <div className="pl-top">
-            <Image src={site.logoOnDark} alt="" width={1280} height={371} loading="eager" sizes="160px" className="pl-logo" />
+            <Image src={site.logoOnDark} alt="" width={1280} height={371} loading="eager" fetchPriority="low" sizes="160px" className="pl-logo" />
             <p className="pl-caption">
               <span className="pl-live" />
               Revenue assurance for hotels

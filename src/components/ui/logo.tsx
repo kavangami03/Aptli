@@ -25,7 +25,9 @@ export function Logo({
       alt={`${site.name}, ${site.tagline.toLowerCase()}`}
       width={1280}
       height={371}
+      // Eager (above the fold) but low priority, so the hero photo (the LCP image) downloads first.
       loading={priority ? "eager" : undefined}
+      fetchPriority={priority ? "low" : undefined}
       sizes="(max-width: 767px) 120px, 160px"
       className={cn("h-auto w-[clamp(7rem,6rem+1.5vw,10rem)]", className)}
     />
