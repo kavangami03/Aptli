@@ -191,7 +191,8 @@ export function SiteHeader() {
             </ul>
           </nav>
 
-          <div className="flex items-center gap-2">
+          {/* Over the dark hero the header has no ground, so the CTA uses its on-dark hover (wipes to white) */}
+          <div className={cn("flex items-center gap-2", overDark && "on-ink")}>
             <Button href={site.primaryCta.href} variant="brand" className="max-bp576:hidden">
               {site.primaryCta.label}
             </Button>
